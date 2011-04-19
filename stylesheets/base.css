@@ -19,9 +19,29 @@
     src: local('Droid Sans'), local('DroidSans'), url('http://themes.googleusercontent.com/font?kit=s-BiyweUPV0v-yRb-cjciL3hpw3pgy2gAi-Ip7WPMi0') format('woff');
 }
 
+.stars {
+
+    padding-left:50px;
+    margin-bottom:25px;
+    background:transparent url(/media/icons/pmf_32.jpg) no-repeat;
+
+}
+
+ul {
+    list-style-type:none;
+}
+
+.icon_point img {
+    width:94px;
+    height:94px;
+    float:left;
+    margin-right:10px;
+    border:2px solid gray;
+}
+
+
 .c2a {
     display: inline;
-    display: none;
 
     float: left;
     -moz-border-radius: 4px;
@@ -72,7 +92,7 @@
     background-image: linear-gradient(top,#68c50D 0,#336700 100%);
 }
 body { 
-    font-family: 'Droid Sans';
+    font-family: Arial; Sans-serif;
     min-width: 1000px;
     margin:0px;
     padding:0px;
@@ -170,7 +190,6 @@ div.footer {
     float:left;
 }
 #nav_bar li a {
-    color:#333;
     padding:0px 20px;
     display:block;
     line-height:31px;
