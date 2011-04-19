@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>Dashboard, bitches</h1>
+    <h2>Bitches, bitches</h2>
+{% endblock header %}
+
+{% block style %}
+    .icons {
+        float:left;
+        clear:both;
+    }
+    .step_icon {
+        float:left;
+        padding:4px;
+        border:1px solid gray;
+    }
+    .current_step {
+        float:left;
+        clear:both;
+    }
+    .feed {
+        float:left;
+        clear:both;
+    }
+{% endblock style %}
+
+{% block script %}
+
+
+{% endblock script %}
+
+{% block content %}
+
+    <div class="jqmWindow" id="evidence_popup" style="overflow:auto;">
+        <form action="/dashboard/evidence/" method="post">
+            <input type="hidden" name="key" value="{{current_progress.key}}" />
+            <br/>
+            Results: <textarea name="evidence">{{current_progress.evidence}}</textarea>
+            <a href="javascript:void(0);" onclick="$('#evidence_popup').jqmHide();">Actually I don't know enough yet</a>
+            <input type="submit" value="Yeah!"/>
+        </form>
+    </div>
+
+    <div class="icons">
+        {% for step in steps %}
+            <div class="step_icon">
+                <img src="{{ step.icon_big }}" />
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="current_step">
+        <form id="hypothesis_form" action="/dashboard/hypothesis/" method="post">
+            {{ current_progress.step.name }}
+            <input type="hidden" name="key" value="{{current_progress.key}}" />
+            <br/>
+            Belief: <textarea name="hypothesis">{{current_progress.hypothesis}}</textarea>
+            <br/>
+            <input id="save_and_continue" type="submit" value="Save"/>
+            <input id="save_and_forward" type="submit" value="Onward!"/>
+        </form>
+
+        <script>
+
+            $("#hypothesis_form").submit( function(event) {
+            });
+
+            $("#save_and_forward").click( function(event) {
+                event.preventDefault();
+
+                $.post($("#hypothesis_form").attr("action"),
+                        $("#hypothesis_form").serialize()
+                    );
+
+                $("#evidence_popup").jqm();
+                $("#evidence_popup").jqmShow();
+            });
+
+            $("#save_and_continue").click( function(event) {
+                event.preventDefault();
+
+                $.post($("#hypothesis_form").attr("action"),
+                        $("#hypothesis_form").serialize()
+                    );
+            });
+
+        </script>
+    </div>
+
+    <div class="feed">
+        {% for p in progress %}
+            <p>
+                <img src="{{ p.step.icon_small }}" />
+                <b>{{ p.step.name }}</b>
+                {{p.hypothesis}}
+                <br/>
+                <i>{{p.evidence}}</i>
+            </p>
+        {% endfor %}
+    </div>
+{% endblock content %}

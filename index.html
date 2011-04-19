@@ -1,0 +1,78 @@
+<html>
+<head>
+
+<script type="text/javascript" src="/media/jquery.min.js"></script>
+<script type="text/javascript" src="/media/jqModal.js"></script>
+
+<link href='/stylesheets/base.css' rel='stylesheet' type='text/css'>
+
+<script>
+    function goToByScroll(id){
+        $('html,body').animate({scrollTop: $("#"+id).offset().top},'slow');
+    }
+</script>
+</head>
+
+<body id="header">
+
+    <div class="bg_dark">
+
+        <div class="title_bar">
+
+            <div style="float:right;position:relative;color:#fff;">
+                <a href="{{ header_c2a_url }}">{{ header_c2a_linktext }}</a> or <a href="{{ acct_url }}">{{ acct_url_linktext }}</a>.
+            </div>
+
+            <h1>Traction tracker</h1>
+            <h2>Blah blah</h2>
+
+            <a href="" class="c2a">Get started!</a>
+
+        </div>
+    </div>
+
+    <div class="bg_nav_bar">
+        <div id="nav_bar">
+            <ul>
+                <li><a href="javascript:void(0);" onclick="goToByScroll('how');">Programs & events</a></li>
+                <li><a href="javascript:void(0);" onclick="goToByScroll('extra_info');">Working together</a></li>
+                <li><a href="javascript:void(0);" onclick="goToByScroll('philosophy');">Philosophy</a></li>
+                <li><a class="last" href="javascript:void(0);" onclick="goToByScroll('software');">Tools & software</a></li>
+                <!--
+                <li><a class="last" href="javascript:void(0);" onclick="goToByScroll('team');">Team</a></li>
+                <li><a class="last" href="">Contact</a></li>
+                -->
+            </ul>
+        </div>
+    </div>
+    <div class="bg_lightest">
+        <div class="wide">
+            section 1
+        </div>
+    </div>
+
+    <div class="bg_lightest">
+        <div class="wide">
+            section 2
+        </div>
+    </div>
+
+    <div class="bg_lightest">
+    </div>
+
+    <div class="bg_lightest">
+    </div>
+
+    <div class="bg_medium">
+        <div class="wide">
+        </div>
+    </div>
+
+    <div class="bg_dark">
+        <div class="footer">
+            footer
+        </div>
+    </div>
+
+</body>
+</html>

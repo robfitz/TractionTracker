@@ -1,0 +1,63 @@
+<html>
+<head>
+
+<script type="text/javascript" src="/media/jquery.min.js"></script>
+<script type="text/javascript" src="/media/jqModal.js"></script>
+
+<script type="text/javascript" language="javascript">
+    function popup(url) {
+        $("#dialog").jqm({ajax:url, ajaxText: 'Loading' });
+        $("#dialog").jqmShow();
+    }
+
+    {% block script %}
+    {% endblock script %}
+</script>
+
+<style type="text/css">
+    {% block style %}
+    {% endblock style %}
+</style>
+
+<link href='/stylesheets/base.css' rel='stylesheet' type='text/css'>
+<link href="/stylesheets/popups.css" rel="stylesheet" type="text/css" />
+
+<body id="header">
+
+	<div class="jqmWindow" id="dialog" style="overflow:auto;">
+		{% block jqmWindow %}
+		{% endblock %}
+	</div>
+
+    <div class="bg_dark">
+
+        <div class="wide">
+
+            <div style="float:right;position:relative;color:#fff;">
+                <a href="{{ header_c2a_url }}">{{ header_c2a_linktext }}</a> or <a href="{{ acct_url }}">{{ acct_url_linktext }}</a>.
+            </div>
+
+            {% block header %}
+            block header
+            {% endblock header %}
+        </div>
+
+    </div>
+
+    <div class="bg_light">
+        <div class="wide">
+            {% block content %}
+                block content
+            {% endblock content %}
+        </div>
+    </div>
+
+    <div class="bg_dark">
+        <div class="footer">
+            {% block footer %}
+                block footer
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>
