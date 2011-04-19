@@ -4,11 +4,14 @@ import cgi
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-from google.appengine.ext.webapp import template
 
-import appengine_admin
 import models
+import appengine_admin
 
+#from google.appengine.dist import use_library
+#use_library('django', '1.2')
+
+from google.appengine.ext.webapp import template
 
 class MainPage(webapp.RequestHandler):
 
@@ -93,12 +96,17 @@ class SaveEvidence(webapp.RequestHandler):
 
         key = self.request.get("key")
         evidence = self.request.get("evidence")
+        next_step_key = self.request.get("next_step")
 
         current_progress = models.Progress.get(key)
         current_progress.evidence = evidence
         current_progress.put()
 
-        next_step = current_progress.step.next()
+        if next_step_key:
+            next_step = models.StepTemplate.get(next_step_key)
+        else:
+            next_step = current_progress.step.next()
+
         next_progress = models.Progress(
                 step=next_step,
                 company=company,
@@ -108,10 +116,29 @@ class SaveEvidence(webapp.RequestHandler):
         self.redirect('/dashboard')
 
 
+class PivotPopup(webapp.RequestHandler):
+
+    def get(self):
+
+        user = users.get_current_user()
+        key = self.request.get("step")
+
+        company = models.Company.all().filter("owner =", user)[0]
+        progress = models.Progress.all().filter("company =", company).order("-order")
+        current_progress = progress[0]
+
+        pivot_to_step = models.StepTemplate.get(key)
+
+        template_values = {
+                'current_progress': current_progress,
+                'next_step': pivot_to_step,
+            }
+
+        path = os.path.join(os.path.dirname(__file__), 'pivot_popup.html')
+        self.response.out.write(template.render(path, template_values))
+        
+
 class Dashboard(webapp.RequestHandler):
-
-
-
 
     def get(self):
 
@@ -158,6 +185,7 @@ application = webapp.WSGIApplication([
         ('/new', NewProject),
         ('/dashboard/hypothesis/', SaveHypothesis_ajax),
         ('/dashboard/evidence/', SaveEvidence),
+        ('/dashboard/pivot/', PivotPopup),
         ('/dashboard', Dashboard),
         ('/dashboard/', Dashboard),
         (r'^(/admin)(.*)$', appengine_admin.Admin),

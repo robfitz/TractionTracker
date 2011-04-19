@@ -1,0 +1,15 @@
+{% extends 'popup.html' %}
+
+{% block content %}
+    
+    what have you learned that makes you want to go back?
+        <form action="/dashboard/evidence/" method="post">
+            <input type="hidden" name="next_step" value="{{next_step.key}}" />
+            <input type="hidden" name="key" value="{{current_progress.key}}" />
+            <br/>
+            Results: <textarea name="evidence">{{current_progress.evidence}}</textarea>
+            <a href="javascript:void(0);" onclick="$('#evidence_popup').jqmHide();">Actually I don't know enough yet</a>
+            <input type="submit" value="Pivot!"/>
+        </form>
+
+{% endblock %}

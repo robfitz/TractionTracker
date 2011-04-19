@@ -9,10 +9,13 @@
 04-18-2011
 ----------
 
-14:10 (x2) - 
+14:10 (90m x2) - functionality, design
+16:15 ( x2) - landing page
 
 
 
 [x] move on to next step
 [x] add intermediate learning
-[ ] save without moving on
+[x] save without moving on
+[x] backwards
+[ ] progress timestamps

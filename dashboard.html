@@ -45,9 +45,18 @@
     <div class="icons">
         {% for step in steps %}
             <div class="step_icon">
-                <img src="{{ step.icon_big }}" />
+                <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">
+                    <img src="{{ step.icon_big }}" />
+                </a>
             </div>
         {% endfor %}
+        <script>
+            function click_step(step_num, step_key) {
+                if (step_num <= {{current_progress.step.order}}) {
+                    popup('/dashboard/pivot/?step=' + step_key);
+                }
+            }
+        </script>
     </div>
 
     <div class="current_step">
