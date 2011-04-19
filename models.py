@@ -23,10 +23,10 @@ class StepTemplate(db.Model):
         return unicode(self.name)
 
     def icon_big(self):
-        return "/media/%s_64.jpg" % self.icon_url_base
+        return "/media/icons/%s_64.jpg" % self.icon_url_base
 
     def icon_small(self):
-        return "%s_32.jpg" % self.icon_url_base
+        return "/media/icons/%s_32.jpg" % self.icon_url_base
 
     def next(self):
         try:
