@@ -1,32 +1,38 @@
-<html>
-<head>
+{% extends 'base.html' %}
 
-<script type="text/javascript" src="/media/jquery.min.js"></script>
-<script type="text/javascript" src="/media/jqModal.js"></script>
-
-<link href='/stylesheets/base.css' rel='stylesheet' type='text/css'>
-
-<script>
+{% block script %}
     function goToByScroll(id){
         $('html,body').animate({scrollTop: $("#"+id).offset().top},'slow');
     }
-</script>
-</head>
+{% endblock %}
 
-<body id="header">
+{% block style %}
+
+.left {
+	float:left;
+	margin-right:10px;
+	width:690px;
+}
+.right {
+	float:left;
+	width:300px;
+}
+.icon_point {
+	margin-bottom:10px;
+}
+.icon_point img {
+	float:left;
+}
+{% endblock %}
+
+{% block header %}
 
     <div class="bg_dark">
 
         <div class="title_bar">
 
-            <div style="float:right;position:relative;color:#fff;">
-                <a href="{{ header_c2a_url }}">{{ header_c2a_linktext }}</a> or <a href="{{ acct_url }}">{{ acct_url_linktext }}</a>.
-            </div>
-
-            <h1>Traction tracker</h1>
-            <h2>Blah blah</h2>
-
-            <a href="" class="c2a">Get started!</a>
+            <h1>Traction Tracker</h1>
+            <p>The <strong>Traction Tracker</strong> is designed to help start-ups and founders keep track of their early customer development activities.</p>
 
         </div>
     </div>
@@ -34,30 +40,138 @@
     <div class="bg_nav_bar">
         <div id="nav_bar">
             <ul>
-                <li><a href="javascript:void(0);" onclick="goToByScroll('how');">Programs & events</a></li>
-                <li><a href="javascript:void(0);" onclick="goToByScroll('extra_info');">Working together</a></li>
-                <li><a href="javascript:void(0);" onclick="goToByScroll('philosophy');">Philosophy</a></li>
-                <li><a class="last" href="javascript:void(0);" onclick="goToByScroll('software');">Tools & software</a></li>
-                <!--
-                <li><a class="last" href="javascript:void(0);" onclick="goToByScroll('team');">Team</a></li>
-                <li><a class="last" href="">Contact</a></li>
-                -->
+                <li><a href="javascript:void(0);" onclick="goToByScroll('how');">What?</a></li>
+                <li><a href="javascript:void(0);" onclick="goToByScroll('extra_info');">Why?</a></li>
+                <li><a href="javascript:void(0);" onclick="goToByScroll('philosophy');">How?</a></li>
             </ul>
         </div>
     </div>
+{% endblock header %}
+    
+{% block content %}
     <div class="bg_lightest">
         <div class="wide">
-            section 1
+            <div class="left">
+            
+		    <img src="/media/screen.png" />
+
+            </div>
+
+            <div class="right">
+
+                <ul>
+                <li class="stars"><h3>Focus on customer development</h3>
+
+				<li class="stars"><h3>Keep track of your customer interactions and pivots</h3>
+
+				<li class="stars"><h3>Share your progress with your team, mentors and investors</h3>
+                </ul>
+                
+                <a class="c2a">Start Tracking!</a>
+                
+            </div>
+
         </div>
     </div>
 
     <div class="bg_lightest">
         <div class="wide">
-            section 2
+            <div class="left">
+
+                
+                <h2><a href="javascript:void(0);" onclick="goToByScroll('header');" class="back_link">Back&nbsp;to&nbsp;top</a>Why?</h2>
+
+            	<p>The <strong>Traction Tracker</strong> is designed to help start-ups and founders keep track of their early <em>Customer Development</em> activities.</p>
+
+				<p>From initial <em>Target Customer</em> to <em>Minimum Viable Product (MVP)</em> and <em>Product-Market Fit (PMF)</em>, the <strong>Traction Tracker</strong> helps ensure your time is spent reducing risks and validating hypotheses instead of wasting time building a business around fundamentally flawed assumptions.</p>
+
+				<p>The main cause of start-up failure is not listening to customers and lack of focus and our intention is to help founders and start-ups increase their odds of success by spending the early discovery stages of starting something focused on <em>Customer Development.</em></p>
+                    
+            </div>
+
+            <div class="right">
+
+                <div class="testimonials">
+                    <h3>Who we're working with...</h3>
+                    <img src="media/lec.jpg" />
+                    <img src="media/chinauk.jpg" />
+                    <img src="media/nvpc.jpg" />
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="bg_lightest">
+
+
+        <div id="left" class="wide">
+
+            <div class="right medium" style="float:right;">
+                <h3>An Example...</h3>
+
+                <p>
+                UCL's E Challenge had 650 applicants to their 4-phase competition, supplemented by weekly workshop events. Ultimately, 30 finalists gave live presentations, which were evaluated in combination with their online submissions to select winners across 4 categories for prizes totaling &#8364;20,000.
+                </p>
+                <p>
+                Nvana was used throughout the event for application management and judging. Its use saved significant amounts of organizer time related to judging and allowed teams to receive their judge feedback immediately.
+                </p>
+                <p>
+                Since then, UCL has run two additional events using Nvana, giving out nearly &#8364;100,000 to student entrepreneurs through the platform.
+                </p>
+
+            </div>
+
+            <h2><a href="javascript:void(0);" onclick="goToByScroll('header');" class="back_link">Back&nbsp;to&nbsp;top</a>How?</h2>
+
+			<p>The <strong>Traction Tracker</strong> works by tracking the key phases and iterations in a startup lifecycle:</p>
+
+
+            <div class="left icon_point">
+                <img src="/media/icons/customer_128.jpg" />
+                <h3>Target Customer</h3>
+                <p>
+                "If you can't find ten people who say they'll buy it, your company is bullshit." - <a href="http://blog.asmartbear.com/customer-validation.html" target="blank">Jason Cohen</a>, A Smart Bear
+                </p>
+            </div>
+            <div class="left icon_point">
+                <img src="/media/icons/problem_128.jpg" />
+                <h3>Problem</h3>
+                <p>
+                "Until you find a <strong>Problem</strong> worth solving, it really doesn't make sense to quit your day job." - <a href="http://www.ashmaurya.com/2010/03/bootstrapping-a-lean-startup/" target="blank">Ash Maurya</a>, Running Lean
+                </p>
+            </div>
+            <div class="left icon_point">
+                <img src="/media/icons/solution_128.jpg" />
+                <h3>Solution</h3>
+                <p>
+                "Founders talk to customers to discover and validate whether the total <strong>Solution</strong> solves that problem or addresses that need" - <a href="http://steveblank.com/2009/11/30/customer-development-is-not-a-focus-group/" target="blank">Steve Blank</a>, The Four Steps to the Epiphany
+                </p>
+            </div>
+            <div class="left icon_point">
+                <img src="/media/icons/market_128.jpg" />
+                <h3>Total Addressable Market (TAM)</h3>
+                <p>
+                "<strong>Total Addressable Market (TAM)</strong> is a term that is typically used to reference the revenue opportunity available for a product or service. TAMs help to prioritize business opportunities by serving as a quick metric of the underlying potential of a given opportunity." - <a href="http://en.wikipedia.org/wiki/Total_addressable_market" target="blank">Wikipedia</a>
+                </p>
+            </div>
+            <div class="left icon_point">
+                <img src="/media/icons/mvp_128.jpg" />
+                <h3>Minimum Viable Product (MVP)</h3>
+                <p>
+                "The <strong>Minimum Viable Product (MVP)</strong> is that version of a new product which allows a team to collect the maximum amount of validated learning about customers with the least effort." - <a href="http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html" target="blank">Eric Ries</a>, Startup Lessons Learned
+                </p>
+            </div>
+            <div class="left icon_point">
+                <img src="/media/icons/pmf_128.jpg" />
+                <h3>Product-Market Fit (PMF)</h3>
+                <p>
+                "I ask existing users of a product how they would feel if they could no longer use the product. In my experience, achieving <strong>Product-Market Fit (PMF)</strong> requires at least 40% of users saying they would be "very disappointed" without your product." - <a href="http://startup-marketing.com/the-startup-pyramid/" target="blank">Sean Ellis</a>, The Startup Pyramid
+                </p>
+            </div>
+
+        </div>
+
+    </div>
     </div>
 
     <div class="bg_lightest">
@@ -68,11 +182,8 @@
         </div>
     </div>
 
-    <div class="bg_dark">
-        <div class="footer">
-            footer
-        </div>
-    </div>
+{% endblock content %}
 
-</body>
-</html>
+{% block footer %}
+            &copy; Rob & Tom
+{% endblock %}
