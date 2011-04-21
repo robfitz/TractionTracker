@@ -1,6 +1,44 @@
 <html>
+    <head>
+        <style>
+            .popup h1 {
+                font-size:18px;
+                font-family:'Helvetica';
+                color:#fff;
+                float:left;
+                margin:0 0 0 10px;
+            }
+            .popup {
+                background-color:#ccc;
+                border:1px solid gray;
+                text-align:left;
+                height:95%;
+            }
+            .popup_content {
+                padding:10px;
+                float:left;
+            }
+            .popup_header {
+                background-color:#333;
+                color:#fff;
+                padding:10px 0;
+                float:left;
+                width:100%;
+            }
+        </style>
+    </head>
+
     <body>
-        {% block content %}
-        {% endblock content %}
+        <div class="popup">
+            <div class="popup_header">
+                <h1>{% block header %}{% endblock %}</h1>
+                <span style="float:right;margin-right:10px;"><a href="javascript:void(0);" onclick="closePopup();">[X] Close</a></span>
+            </div>
+
+            <div class="popup_content">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
     </body>
 </html>

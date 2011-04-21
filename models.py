@@ -53,6 +53,8 @@ class Progress(db.Model):
     hypothesis = db.StringProperty(default="", multiline=True)
     evidence = db.StringProperty(default="", multiline=True)
 
+    timestamp = db.DateTimeProperty(auto_now_add=True)
+
 
 class AdminFlowTemplate(appengine_admin.ModelAdmin):
     model = FlowTemplate

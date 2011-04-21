@@ -28,10 +28,37 @@
         float:left;
         clear:both;
     }
+    #bad_pivot {
+        float:left;
+    }
+    .step_icon_area {
+        float:left;
+        margin:10px;
+        position:relative;
+    }
+    .step_icon_area h4 {
+        font-family:'Helvetica';
+        width:120px;
+        height:120px;
+        text-align:center;
+    }
     .step_icon {
         float:left;
-        padding:4px;
-        border:1px solid gray;
+        padding:10px;
+        border:4px solid white;
+        position:absolute;
+        top:60px;
+        left:20px;
+
+        -moz-border-radius: 18px;
+        -webkit-border-radius: 18px;
+        -o-border-radius: 18px;
+        -ms-border-radius: 18px;
+        -khtml-border-radius: 18px;
+        border-radius: 18px;
+    }
+    .step_icon:hover {
+        border:4px solid #bbb;
     }
     .current_step {
         float:left;
@@ -64,30 +91,40 @@
 {% block content %}
 
     <div class="jqmWindow" id="evidence_popup" style="overflow:auto;">
-        <form action="/dashboard/evidence/" method="post">
-            <input type="hidden" name="key" value="{{current_progress.key}}" />
-            <br/>
-            Results: <textarea name="evidence">{{current_progress.evidence}}</textarea>
-            <a href="javascript:void(0);" onclick="$('#evidence_popup').jqmHide();">Actually I don't know enough yet</a>
-            <input type="submit" value="Yeah!"/>
-        </form>
     </div>
 
     <div class="icons">
         {% for step in steps %}
-            <div class="step_icon">
-                <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">
-                    <img src="{{ step.icon_big }}" />
-                </a>
+            <div class="step_icon_area">
+                <h4> {{step.name }}</h4>
+                <div class="step_icon">
+                    <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">
+                        <img src="{{ step.icon_big }}" />
+                    </a>
+                </div>
             </div>
         {% endfor %}
         <script>
             function click_step(step_num, step_key) {
                 if (step_num <= {{current_progress.step.order}}) {
+                    //pivot back to the same or earlier step
                     popup('/dashboard/pivot/?step=' + step_key);
+                }
+                else if (step_num == 1 + {{current_progress.step.order}}) {
+                    //use the icon to move exactly one step forward
+                    $("#save_and_forward").click();
+                }
+                else {
+                    //not able to use icons to scoot ahead further than that
+                    $("#bad_pivot").slideDown();
                 }
             }
         </script>
+    </div>
+
+    <div id="bad_pivot" class="alert hidden">
+        Before jumping this far ahead, you need to fill in beliefs for the preceding steps. Even if you aren't 100% sure, writing down what you're currently thinking will help you later.
+        <a href="javascript:void(0);" class="medium" onclick="$('#bad_pivot').slideUp();">(Hide this message)</a>
     </div>
 
     <div class="current_step">
@@ -117,18 +154,21 @@
             });
 
             $("#save_and_forward").click( function(event) {
-                event.preventDefault();
+                if (event) {
+                    event.preventDefault();
+                }
 
                 $.post($("#hypothesis_form").attr("action"),
                         $("#hypothesis_form").serialize()
                     );
 
-                $("#evidence_popup").jqm();
-                $("#evidence_popup").jqmShow();
+                popup('/dashboard/add_evidence/?progress={{current_progress.key}}');
             });
 
             $("#save_and_continue").click( function(event) {
-                event.preventDefault();
+                if (event) {
+                    event.preventDefault();
+                }
 
                 $.post($("#hypothesis_form").attr("action"),
                         $("#hypothesis_form").serialize()
@@ -141,13 +181,25 @@
     <div class="feed">
         {% for p in progress %}
             <div class="feeditem">
-            <p>
+            <p class="owned_feed_item">
                 <img src="{{ p.step.icon_small }}" />
                 <b>{{ p.company.name }}</b> defined their <b>{{ p.step.name }}</b> as <i>"{{p.hypothesis}}"</i>
                 <br/>
                 <p style="margin-left:100px;">and validated it by <i>"{{p.evidence}}"</i></p> on <i>{{ p.timestap }}</i>
+                <i>{{p.evidence}}</i>
+                <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">(Edit)</a>
             </p>
             </div>
         {% endfor %}
+
+        <script>
+            $(".owned_feed_item").mouseover(function(event) {
+                $(this).children(".edit_link").show();
+            });
+            $(".owned_feed_item").mouseout(function(event) {
+                $(this).children(".edit_link").hide();
+            });
+        </script>
+
     </div>
 {% endblock content %}
