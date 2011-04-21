@@ -13,10 +13,34 @@
     #bad_pivot {
         float:left;
     }
+    .step_icon_area {
+        float:left;
+        margin:10px;
+        position:relative;
+    }
+    .step_icon_area h4 {
+        font-family:'Helvetica';
+        width:120px;
+        height:120px;
+        text-align:center;
+    }
     .step_icon {
         float:left;
-        padding:4px;
-        border:1px solid gray;
+        padding:10px;
+        border:4px solid white;
+        position:absolute;
+        top:60px;
+        left:20px;
+
+        -moz-border-radius: 18px;
+        -webkit-border-radius: 18px;
+        -o-border-radius: 18px;
+        -ms-border-radius: 18px;
+        -khtml-border-radius: 18px;
+        border-radius: 18px;
+    }
+    .step_icon:hover {
+        border:4px solid #bbb;
     }
     .current_step {
         float:left;
@@ -40,10 +64,13 @@
 
     <div class="icons">
         {% for step in steps %}
-            <div class="step_icon">
-                <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">
-                    <img src="{{ step.icon_big }}" />
-                </a>
+            <div class="step_icon_area">
+                <h4> {{step.name }}</h4>
+                <div class="step_icon">
+                    <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">
+                        <img src="{{ step.icon_big }}" />
+                    </a>
+                </div>
             </div>
         {% endfor %}
         <script>
