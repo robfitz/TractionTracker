@@ -7,6 +7,7 @@ Evidence!
 {% block content %}
     <form action="/dashboard/evidence/" method="post">
         <input type="hidden" name="key" value="{{current_progress.key}}" />
+        <input type="hidden" name="next_step" value="{{current_progress.step.next.key}}" />
         <br/>
         Results: <textarea name="evidence">{{current_progress.evidence}}</textarea>
         <a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a>

@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1 class="dashboard_title">Dashboard, bitches</h1>
+
+    <h1 class="dashboard_title">Traction tracker dashboard</h1>
+    <p>The <strong>Traction Tracker</strong> is designed to help start-ups and founders keep track of their early customer development activities.</p>
+
 {% endblock header %}
 
 {% block style %}
@@ -10,12 +13,23 @@
         font-family:"Helvetica";
         color:#fff;
     }
+    textarea {
+        border: 3px solid #cccccc;
+        padding: 5px;
+        font-family: Cabin Sketch, sans-serif;
+        //background-image: url(bg.gif);
+        background-position: bottom right;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 120px;
+    }
     .icons {
         float:left;
         clear:both;
     }
     #bad_pivot {
         float:left;
+        margin-top:10px;
     }
     .step_icon_area {
         float:left;
@@ -48,6 +62,7 @@
     }
     .current_step {
         padding: 36px;
+        width: 926px;
 
         float:left;
         clear:both;
@@ -62,18 +77,44 @@
     }
     .feed {
         float:left;
-        clear:both;
+        clear:both; 
     }
+    .feeditem {
+        padding:5px;
+    }
+    .textbox {
+        float:left;
+        width:600px;
+    }
+    .buttons {
+        float:left;
+        width:30%;
+        height: 80px;
+    }
+    
 {% endblock style %}
 
 {% block script %}
+
+    $(document).ready( function() {
+        var pos = $("#step_icon_{{current_progress.step.key}}").offset();
+
+        $("#step_arrow").css("left", pos.left + 5);
+
+        pos = $(".current_step").offset();
+        $("#step_arrow").css("top", pos.top - 31);
+
+        $("#step_arrow").show();
+    });
 
 
 {% endblock script %}
 
 {% block content %}
 
-    <div class="jqmWindow" id="evidence_popup" style="overflow:auto;">
+    <div id="bad_pivot" class="alert hidden">
+        Before jumping this far ahead, you need to fill in beliefs for the preceding steps. Even if you aren't 100% sure, writing down what you're currently thinking will help you later.
+        <a href="javascript:void(0);" class="medium" onclick="$('#bad_pivot').slideUp();">(Hide this message)</a>
     </div>
 
     <div class="icons">
@@ -82,12 +123,13 @@
                 <h4> {{step.name }}</h4>
                 <div class="step_icon">
                     <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">
-                        <img src="{{ step.icon_big }}" />
+                        <img id="step_icon_{{step.key}}" src="{{ step.icon_big }}" />
                     </a>
                 </div>
             </div>
         {% endfor %}
         <script>
+
             function click_step(step_num, step_key) {
                 if (step_num <= {{current_progress.step.order}}) {
                     //pivot back to the same or earlier step
@@ -105,21 +147,27 @@
         </script>
     </div>
 
-    <div id="bad_pivot" class="alert hidden">
-        Before jumping this far ahead, you need to fill in beliefs for the preceding steps. Even if you aren't 100% sure, writing down what you're currently thinking will help you later.
-        <a href="javascript:void(0);" class="medium" onclick="$('#bad_pivot').slideUp();">(Hide this message)</a>
-    </div>
-
     <div class="current_step">
         <form id="hypothesis_form" action="/dashboard/hypothesis/" method="post">
-            {{ current_progress.step.name }}
+            <h3>{{ current_progress.step.name }}</h3>
             <input type="hidden" name="key" value="{{current_progress.key}}" />
             <br/>
-            Belief: <textarea name="hypothesis">{{current_progress.hypothesis}}</textarea>
-            <br/>
-            <input id="save_and_continue" type="submit" value="Save"/>
-            <input id="save_and_forward" type="submit" value="Onward!"/>
+
+            <p>
+            We would define the <b>{{ current_progress.step.name }}</b> as:
+            </p>
+            
+            <div class="textbox">
+                <textarea name="hypothesis">{{current_progress.hypothesis}}</textarea>
+            </div>
+            
+            <div class="buttons">
+            <input id="save_and_continue" type="submit" value="Save" class="c2b"/>
+            <input id="save_and_forward" type="submit" value="Onward!" class="c2a"/>
+            </div>
         </form>
+
+        <img style="position:absolute;top:-31px;" class="hidden" id="step_arrow" src="/media/tri.jpg" />
 
         <script>
 
@@ -153,21 +201,25 @@
 
     <div class="feed">
         {% for p in progress %}
-            <p class="owned_feed_item">
-                <img src="{{ p.step.icon_small }}" />
-                <b>{{ p.step.name }}</b>
-                {{p.hypothesis}}
-                <br/>
-                <i>{{p.evidence}}</i>
-                <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">(Edit)</a>
-            </p>
+            <div class="feeditem">
+                <p>
+                    <img src="{{ p.step.icon_small }}" />
+                    <b>{{ p.company.name }}</b> defined their <b>{{ p.step.name }}</b> as <i>"{{p.hypothesis}}"</i>
+                    <br/>
+                <p style="margin-left:100px;">and validated it by <i>"{{p.evidence}}"</i>
+                </p> 
+                on <i>{{ p.timestap }}</i>
+                    <i>{{p.evidence}}</i>
+                    <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">(Edit)</a>
+                </p>
+            </div>
         {% endfor %}
 
         <script>
-            $(".owned_feed_item").mouseover(function(event) {
+            $(".feeditem").mouseover(function(event) {
                 $(this).children(".edit_link").show();
             });
-            $(".owned_feed_item").mouseout(function(event) {
+            $(".feeditem").mouseout(function(event) {
                 $(this).children(".edit_link").hide();
             });
         </script>

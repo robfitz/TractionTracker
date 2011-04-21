@@ -63,6 +63,10 @@ class AdminFlowTemplate(appengine_admin.ModelAdmin):
 class AdminStepTemplate(appengine_admin.ModelAdmin):
     model = StepTemplate
 
-appengine_admin.register(AdminFlowTemplate, AdminStepTemplate)
+
+class AdminCompany(appengine_admin.ModelAdmin):
+    model = Company
+
+appengine_admin.register(AdminFlowTemplate, AdminStepTemplate, AdminCompany)
 
 
