@@ -7,13 +7,19 @@
 <script type="text/javascript" src="/media/jqModal.js"></script>
 
 <script type="text/javascript" language="javascript">
+
     function popup(url) {
         $("#dialog").jqm({ajax:url, ajaxText: 'Loading' });
         $("#dialog").jqmShow();
     }
 
+    function closePopup(url) {
+        $("#dialog").jqmHide();
+    }
+
     {% block script %}
     {% endblock script %}
+
 </script>
 
 <style type="text/css">

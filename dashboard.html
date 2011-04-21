@@ -10,6 +10,9 @@
         float:left;
         clear:both;
     }
+    #bad_pivot {
+        float:left;
+    }
     .step_icon {
         float:left;
         padding:4px;
@@ -53,10 +56,24 @@
         <script>
             function click_step(step_num, step_key) {
                 if (step_num <= {{current_progress.step.order}}) {
+                    //pivot back to the same or earlier step
                     popup('/dashboard/pivot/?step=' + step_key);
+                }
+                else if (step_num == 1 + {{current_progress.step.order}}) {
+                    //use the icon to move exactly one step forward
+                    $("#save_and_forward").click();
+                }
+                else {
+                    //not able to use icons to scoot ahead further than that
+                    $("#bad_pivot").slideDown();
                 }
             }
         </script>
+    </div>
+
+    <div id="bad_pivot" class="alert hidden">
+        Before jumping this far ahead, you need to fill in beliefs for the preceding steps. Even if you aren't 100% sure, writing down what you're currently thinking will help you later.
+        <a href="javascript:void(0);" class="medium" onclick="$('#bad_pivot').slideUp();">(Hide this message)</a>
     </div>
 
     <div class="current_step">
@@ -76,7 +93,9 @@
             });
 
             $("#save_and_forward").click( function(event) {
-                event.preventDefault();
+                if (event) {
+                    event.preventDefault();
+                }
 
                 $.post($("#hypothesis_form").attr("action"),
                         $("#hypothesis_form").serialize()
@@ -87,7 +106,9 @@
             });
 
             $("#save_and_continue").click( function(event) {
-                event.preventDefault();
+                if (event) {
+                    event.preventDefault();
+                }
 
                 $.post($("#hypothesis_form").attr("action"),
                         $("#hypothesis_form").serialize()
@@ -99,13 +120,24 @@
 
     <div class="feed">
         {% for p in progress %}
-            <p>
+            <p class="owned_feed_item">
                 <img src="{{ p.step.icon_small }}" />
                 <b>{{ p.step.name }}</b>
                 {{p.hypothesis}}
                 <br/>
                 <i>{{p.evidence}}</i>
+                <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">(Edit)</a>
             </p>
         {% endfor %}
+
+        <script>
+            $(".owned_feed_item").mouseover(function(event) {
+                $(this).children(".edit_link").show();
+            });
+            $(".owned_feed_item").mouseout(function(event) {
+                $(this).children(".edit_link").hide();
+            });
+        </script>
+
     </div>
 {% endblock content %}

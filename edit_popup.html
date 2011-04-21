@@ -1,0 +1,18 @@
+{% extends 'popup.html' %}
+
+{% block content %}
+    
+    Change it here. But don't cheat! A history of uncertainty is a good thing.
+
+    <form action="/dashboard/evidence/" method="post">
+
+        <input type="hidden" name="key" value="{{progress.key}}" />
+        <br/>
+        Beliefs: <textarea name="hypothesis">{{progress.hypothesis}}</textarea>
+        <br/>
+        Results: <textarea name="evidence">{{progress.evidence}}</textarea>
+        <a href="javascript:void(0);" onclick="closePopup();">Cancel</a>
+        <input type="submit" value="Save"/>
+    </form>
+
+{% endblock %}

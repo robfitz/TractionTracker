@@ -95,25 +95,45 @@ class SaveEvidence(webapp.RequestHandler):
         progress = models.Progress.all().filter("company =", company).order("-order")
 
         key = self.request.get("key")
+        hypothesis = self.request.get("hypothesis")
         evidence = self.request.get("evidence")
         next_step_key = self.request.get("next_step")
 
         current_progress = models.Progress.get(key)
-        current_progress.evidence = evidence
+        if hypothesis:
+            current_progress.hypothesis = hypothesis
+        if evidence:
+            current_progress.evidence = evidence
         current_progress.put()
 
         if next_step_key:
             next_step = models.StepTemplate.get(next_step_key)
-        else:
-            next_step = current_progress.step.next()
 
-        next_progress = models.Progress(
-                step=next_step,
-                company=company,
-                order=models.Progress.all().filter("company =", company).count())
-        next_progress.put()
+            next_progress = models.Progress(
+                    step=next_step,
+                    company=company,
+                    order=models.Progress.all().filter("company =", company).count())
+            next_progress.put()
 
         self.redirect('/dashboard')
+
+
+class EditProgressPopup(webapp.RequestHandler):
+
+    def get(self):
+
+        user = users.get_current_user()
+        key = self.request.get("progress")
+
+        company = models.Company.all().filter("owner =", user)[0]
+        progress = models.Progress.get(key)
+
+        template_values = {
+                'progress': progress,
+            }
+
+        path = os.path.join(os.path.dirname(__file__), 'edit_popup.html')
+        self.response.out.write(template.render(path, template_values))
 
 
 class PivotPopup(webapp.RequestHandler):
@@ -186,6 +206,7 @@ application = webapp.WSGIApplication([
         ('/dashboard/hypothesis/', SaveHypothesis_ajax),
         ('/dashboard/evidence/', SaveEvidence),
         ('/dashboard/pivot/', PivotPopup),
+        ('/dashboard/edit_progress/', EditProgressPopup),
         ('/dashboard', Dashboard),
         ('/dashboard/', Dashboard),
         (r'^(/admin)(.*)$', appengine_admin.Admin),
