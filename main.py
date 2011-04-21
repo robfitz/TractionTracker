@@ -151,6 +151,7 @@ class Dashboard(webapp.RequestHandler):
 
         company = models.Company.all().filter("owner =", user)[0]
 
+        print "comp: %s" % company
         progress = models.Progress.all().filter("company =", company).order("-order")
         flow = company.flow_template
         steps = models.StepTemplate.all().filter("flow =", flow).order("order")

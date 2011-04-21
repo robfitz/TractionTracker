@@ -1,11 +1,29 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>Dashboard, bitches</h1>
-    <h2>Bitches, bitches</h2>
+    <div class="bg_dark">
+
+        <div class="title_bar">
+
+            <h1>Traction Tracker</h1>
+            <p>The <strong>Traction Tracker</strong> is designed to help start-ups and founders keep track of their early customer development activities.</p>
+
+        </div>
+    </div>
 {% endblock header %}
 
 {% block style %}
+    textarea {
+        border: 3px solid #cccccc;
+        padding: 5px;
+        font-family: Cabin Sketch, sans-serif;
+        background-image: url(bg.gif);
+        background-position: bottom right;
+        background-repeat: no-repeat;
+        width: 700px;
+        height: 120px;
+    }
+    
     .icons {
         float:left;
         clear:both;
@@ -21,8 +39,21 @@
     }
     .feed {
         float:left;
-        clear:both;
+        clear:both; 
     }
+    .feeditem {
+        padding:5px;
+    }
+    .textbox{
+        float:left;
+        width:60%;
+    }
+    .buttons{
+        float:left;
+        width:30%;
+        height: 80px;
+    }
+    
 {% endblock style %}
 
 {% block script %}
@@ -61,13 +92,23 @@
 
     <div class="current_step">
         <form id="hypothesis_form" action="/dashboard/hypothesis/" method="post">
-            {{ current_progress.step.name }}
+            <h3>{{ current_progress.step.name }}</h3>
             <input type="hidden" name="key" value="{{current_progress.key}}" />
             <br/>
-            Belief: <textarea name="hypothesis">{{current_progress.hypothesis}}</textarea>
+            <p>We would define the <b>{{ current_progress.step.name }}</b> as:</p>
+            
+            <div class="textbox">
+            <textarea name="hypothesis">{{current_progress.hypothesis}}</textarea>
+            </div>
             <br/>
-            <input id="save_and_continue" type="submit" value="Save"/>
-            <input id="save_and_forward" type="submit" value="Onward!"/>
+            
+            <div class="buttons">
+            <input id="save_and_continue" type="submit" value="Save" class="c2b"/>
+            </div>
+            </br>
+            <div class="buttons">
+            <input id="save_and_forward" type="submit" value="Onward!" class="c2a"/>
+            </div>
         </form>
 
         <script>
@@ -99,13 +140,14 @@
 
     <div class="feed">
         {% for p in progress %}
+            <div class="feeditem">
             <p>
                 <img src="{{ p.step.icon_small }}" />
-                <b>{{ p.step.name }}</b>
-                {{p.hypothesis}}
+                <b>{{ p.company.name }}</b> defined their <b>{{ p.step.name }}</b> as <i>"{{p.hypothesis}}"</i>
                 <br/>
-                <i>{{p.evidence}}</i>
+                <p style="margin-left:100px;">and validated it by <i>"{{p.evidence}}"</i></p> on <i>{{ p.timestap }}</i>
             </p>
+            </div>
         {% endfor %}
     </div>
 {% endblock content %}
