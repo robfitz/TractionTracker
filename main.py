@@ -118,6 +118,24 @@ class SaveEvidence(webapp.RequestHandler):
         self.redirect('/dashboard')
 
 
+class AddEvidencePopup(webapp.RequestHandler):
+
+    def get(self):
+
+        user = users.get_current_user()
+        key = self.request.get("progress")
+
+        company = models.Company.all().filter("owner =", user)[0]
+        progress = models.Progress.get(key)
+
+        template_values = {
+                'current_progress': progress,
+            }
+
+        path = os.path.join(os.path.dirname(__file__), 'evidence_popup.html')
+        self.response.out.write(template.render(path, template_values))
+
+
 class EditProgressPopup(webapp.RequestHandler):
 
     def get(self):
@@ -207,6 +225,7 @@ application = webapp.WSGIApplication([
         ('/dashboard/evidence/', SaveEvidence),
         ('/dashboard/pivot/', PivotPopup),
         ('/dashboard/edit_progress/', EditProgressPopup),
+        ('/dashboard/add_evidence/', AddEvidencePopup),
         ('/dashboard', Dashboard),
         ('/dashboard/', Dashboard),
         (r'^(/admin)(.*)$', appengine_admin.Admin),

@@ -36,13 +36,6 @@
 {% block content %}
 
     <div class="jqmWindow" id="evidence_popup" style="overflow:auto;">
-        <form action="/dashboard/evidence/" method="post">
-            <input type="hidden" name="key" value="{{current_progress.key}}" />
-            <br/>
-            Results: <textarea name="evidence">{{current_progress.evidence}}</textarea>
-            <a href="javascript:void(0);" onclick="$('#evidence_popup').jqmHide();">Actually I don't know enough yet</a>
-            <input type="submit" value="Yeah!"/>
-        </form>
     </div>
 
     <div class="icons">
@@ -101,8 +94,7 @@
                         $("#hypothesis_form").serialize()
                     );
 
-                $("#evidence_popup").jqm();
-                $("#evidence_popup").jqmShow();
+                popup('/dashboard/add_evidence/?progress={{current_progress.key}}');
             });
 
             $("#save_and_continue").click( function(event) {
