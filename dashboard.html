@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>Dashboard, bitches</h1>
-    <h2>Bitches, bitches</h2>
+    <h1 class="dashboard_title">Dashboard, bitches</h1>
 {% endblock header %}
 
 {% block style %}
+    h1.dashboard_title {
+        font-size:24px;
+        font-family:"Helvetica";
+        color:#fff;
+    }
     .icons {
         float:left;
         clear:both;
@@ -43,8 +47,18 @@
         border:4px solid #bbb;
     }
     .current_step {
+        padding: 36px;
+
         float:left;
         clear:both;
+        border:1px solid #bbb;
+
+        -moz-border-radius: 48px;
+        -webkit-border-radius: 48px;
+        -o-border-radius: 48px;
+        -ms-border-radius: 48px;
+        -khtml-border-radius: 48px;
+        border-radius: 48px;
     }
     .feed {
         float:left;
