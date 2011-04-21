@@ -14,10 +14,16 @@
         color:#fff;
     }
     textarea {
-        border: 3px solid #cccccc;
+        border: 2px solid #cccccc;
         padding: 5px;
         font-family: Cabin Sketch, sans-serif;
+<<<<<<< HEAD
         //background-image: url(bg.gif);
+=======
+        font-size: 24px;
+        color: #666666;
+        background-image: url(bg.gif);
+>>>>>>> 721d7271c7f6b26efccbb8f59d40f24604526038
         background-position: bottom right;
         background-repeat: no-repeat;
         width: 100%;
@@ -77,7 +83,8 @@
     }
     .feed {
         float:left;
-        clear:both; 
+        clear:both;
+        margin-bottom: 100px;
     }
     .feeditem {
         padding:5px;
@@ -89,7 +96,7 @@
     .buttons {
         float:left;
         width:30%;
-        height: 80px;
+        height: 70px;
     }
     
 {% endblock style %}
@@ -198,20 +205,20 @@
 
         </script>
     </div>
-
+    
     <div class="feed">
+    <p><h3>History</h3></p>
         {% for p in progress %}
             <div class="feeditem">
-                <p>
-                    <img src="{{ p.step.icon_small }}" />
-                    <b>{{ p.company.name }}</b> defined their <b>{{ p.step.name }}</b> as <i>"{{p.hypothesis}}"</i>
-                    <br/>
-                <p style="margin-left:100px;">and validated it by <i>"{{p.evidence}}"</i>
-                </p> 
-                on <i>{{ p.timestap }}</i>
-                    <i>{{p.evidence}}</i>
-                    <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">(Edit)</a>
-                </p>
+            <p>
+                <img style="padding-right:10px;" src="{{ p.step.icon_small }}" />
+                <b>{{ p.company.name }}</b> defined their <b>{{ p.step.name }}</b> as <i>"{{p.hypothesis}}"</i>
+
+                <br/>
+
+                <p style="margin-left:200px;">and validated with evidence <i>"{{ p.evidence }}"</i> on <small>{{ p.timestamp|date:"l d F Y" }}</small></p>
+                <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">(Edit)</a>
+            </p>
             </div>
         {% endfor %}
 
