@@ -1,7 +1,7 @@
 {% extends 'popup.html' %}
 
 {% block header %}
-The truth? You can't handle the truth!
+<p>The truth? You can't handle the truth!</p>
 {% endblock %}
 
 {% block content %}
@@ -11,6 +11,6 @@ The truth? You can't handle the truth!
         <br/>
         What evidence do you have to validate your <b>{{current_progress.step.name }}</b> hypothesis?<textarea name="evidence">{{current_progress.evidence}}</textarea>
         <a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a>
-        <input type="submit" value="Yeah!" class="c2a" style="margin:10px;"/>
+        <input type="submit" value="Yeah!" class="c2a" style="float:right; margin:10px;"/>
     </form>
 {% endblock content %}
