@@ -40,9 +40,9 @@
     <div class="bg_nav_bar">
         <div id="nav_bar">
             <ul>
-                <li><a href="javascript:void(0);" onclick="goToByScroll('how');">What?</a></li>
-                <li><a href="javascript:void(0);" onclick="goToByScroll('extra_info');">Why?</a></li>
-                <li><a href="javascript:void(0);" onclick="goToByScroll('philosophy');">How?</a></li>
+                <li><a href="javascript:void(0);" onclick="goToByScroll('what');">What?</a></li>
+                <li><a href="javascript:void(0);" onclick="goToByScroll('why');">Why?</a></li>
+                <li><a href="javascript:void(0);" onclick="goToByScroll('how');">How?</a></li>
             </ul>
         </div>
     </div>
@@ -51,7 +51,9 @@
 {% block content %}
     <div class="bg_lightest">
         <div class="wide">
-            <div class="left">
+            <div class="left" id="what">
+            
+            <h2><!--<a href="javascript:void(0);" onclick="goToByScroll('header');" class="back_link">Back&nbsp;to&nbsp;top</a>-->What?</h2>
             
 		    <img src="/media/screen.png" />
 
@@ -67,7 +69,9 @@
 				<li class="stars"><h3>Share your progress with your team, mentors and investors</h3>
                 </ul>
                 
-                <a class="c2a">Start Tracking!</a>
+                <div style="float: left; margin-left: 50px; margin-top: 20px">
+                <a class="c2a" href="{{ header_c2a_url }}">Start Tracking!</a>
+                </div>
                 
             </div>
 
@@ -76,10 +80,10 @@
 
     <div class="bg_lightest">
         <div class="wide">
-            <div class="left">
+            <div class="left" id="why">
 
                 
-                <h2><a href="javascript:void(0);" onclick="goToByScroll('header');" class="back_link">Back&nbsp;to&nbsp;top</a>Why?</h2>
+                <h2><!--<a href="javascript:void(0);" onclick="goToByScroll('header');" class="back_link">Back&nbsp;to&nbsp;top</a>-->Why?</h2>
 
             	<p>The <strong>Traction Tracker</strong> is designed to help start-ups and founders keep track of their early <em>Customer Development</em> activities.</p>
 
@@ -92,7 +96,7 @@
             <div class="right">
 
                 <div class="testimonials">
-                    <h3>Who we're working with...</h3>
+                    <h3>Who we're working with</h3>
                     <img src="media/lec.jpg" />
                     <img src="media/chinauk.jpg" />
                     <img src="media/nvpc.jpg" />
@@ -107,7 +111,7 @@
         <div id="left" class="wide">
 
             <div class="right medium" style="float:right;">
-                <h3>An Example...</h3>
+                <h3>An example</h3>
 
                 <p>
                 UCL's E Challenge had 650 applicants to their 4-phase competition, supplemented by weekly workshop events. Ultimately, 30 finalists gave live presentations, which were evaluated in combination with their online submissions to select winners across 4 categories for prizes totaling &#8364;20,000.
@@ -121,7 +125,9 @@
 
             </div>
 
-            <h2><a href="javascript:void(0);" onclick="goToByScroll('header');" class="back_link">Back&nbsp;to&nbsp;top</a>How?</h2>
+            <div id="how">
+            
+            <h2><!--<a href="javascript:void(0);" onclick="goToByScroll('header');" class="back_link">Back&nbsp;to&nbsp;top</a>-->How?</h2>
 
 			<p>The <strong>Traction Tracker</strong> works by tracking the key phases and iterations in a startup lifecycle:</p>
 
@@ -167,6 +173,7 @@
                 <p>
                 "I ask existing users of a product how they would feel if they could no longer use the product. In my experience, achieving <strong>Product-Market Fit (PMF)</strong> requires at least 40% of users saying they would be "very disappointed" without your product." - <a href="http://startup-marketing.com/the-startup-pyramid/" target="blank">Sean Ellis</a>, The Startup Pyramid
                 </p>
+            </div>
             </div>
 
         </div>

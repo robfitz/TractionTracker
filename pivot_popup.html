@@ -3,14 +3,14 @@
 {% block content %}
     
         <form action="/dashboard/evidence/" method="post">
-            {{ current_progress.step.name }}
+            What evidence do you have for changing your exisiting <b>{{next_step.name}}</b> hypotheses?
             <input type="hidden" name="key" value="{{current_progress.key}}" />
             <input type="hidden" name="next_step" value="{{next_step.key}}" />
             <br/>
-            Results: <textarea name="evidence">{{current_progress.evidence}}</textarea>
+            <textarea name="evidence">{{current_progress.evidence}}</textarea>
             <br/>
             <a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a>
-            <input type="submit" value="Pivot!"/>
+            <input type="submit" value="Pivot!" class="c2b" style="float:right; margin:10px;"/>
         </form>
 
 {% endblock %}

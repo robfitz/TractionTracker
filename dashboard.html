@@ -37,6 +37,7 @@
         float:left;
         margin:10px;
         position:relative;
+        margin-bottom: 25px;
     }
     .step_icon_area h4 {
         font-family:'Helvetica';
@@ -64,7 +65,7 @@
     }
     .current_step {
         padding: 36px;
-        width: 926px;
+        width: 90%;
 
         float:left;
         clear:both;
@@ -80,6 +81,7 @@
     .feed {
         float:left;
         clear:both;
+        width: 100%;
         margin-bottom: 100px;
     }
     .feeditem {
@@ -87,12 +89,13 @@
     }
     .textbox {
         float:left;
-        width:600px;
+        width:70%;
     }
     .buttons {
         float:left;
-        width:30%;
+        width:20%;
         height: 70px;
+        margin-left: 40px;
     }
     
 {% endblock style %}
@@ -212,8 +215,9 @@
 
                 <br/>
 
-                <p style="margin-left:200px;">and validated with evidence <i>"{{ p.evidence }}"</i> on <small>{{ p.timestamp|date:"l d F Y" }}</small></p>
-                <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">(Edit)</a>
+                <p style="margin-left:100px;">and validated with evidence <i>"{{ p.evidence }}"</i></p>
+                <p style="text-align:right;"><b><small>{{ p.timestamp|date:"l d F Y" }}</small></b></p>
+                <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">Edit </a>
             </p>
             </div>
         {% endfor %}
