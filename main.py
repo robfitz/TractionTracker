@@ -184,12 +184,14 @@ class Dashboard(webapp.RequestHandler):
 
         if not user:
 
-            self.redirect(users.create_login_url('/dashboard'))
+            self.redirect(users.create_login_url('/dashboard/'))
             return
 
-        company = models.Company.all().filter("owner =", user)[0]
+        companies = models.Company.all().filter("owner =", user)
+        if companies.count() == 0: 
+            self.redirect("/new/")
+        company = companies[0]
 
-        print "comp: %s" % company
         progress = models.Progress.all().filter("company =", company).order("-order")
         flow = company.flow_template
         steps = models.StepTemplate.all().filter("flow =", flow).order("order")
@@ -201,6 +203,9 @@ class Dashboard(webapp.RequestHandler):
             first_progress.put()
 
         current_progress = progress[0]
+        prev_progress = None
+        if progress.count() >= 2:
+            prev_progress = progress[1]
         progress = progress[1:progress.count()]
 
         template_values = {
@@ -210,6 +215,7 @@ class Dashboard(webapp.RequestHandler):
                 'acct_url_linktext': 'Logout',
                 'steps': steps,
                 'progress': progress,
+                'prev_progress': prev_progress,
                 'current_progress': current_progress,
 
             }

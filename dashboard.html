@@ -166,8 +166,13 @@
             <input type="hidden" name="key" value="{{current_progress.key}}" />
             <br/>
 
+            {% if prev_progress %}
             <p>
-            We would define the <b>{{ current_progress.step.name }}</b> as:
+            Now that you've got a <i>{{prev_progress.step.name}}</i> of <i>{{prev_progress.hypothesis}}</i>,
+            </p>
+            {% endif %}
+            <p>
+            What is your current <b>{{ current_progress.step.name }}</b>?
             </p>
             
             <div class="textbox">
