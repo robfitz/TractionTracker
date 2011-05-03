@@ -123,11 +123,16 @@
         <a href="javascript:void(0);" class="medium" onclick="$('#bad_pivot').slideUp();">(Hide this message)</a>
     </div>
 
+    <div class="pivot_note" style="float:right; position:absolute; top: 100px; right:120px;">
+    <div style ="float:left"><img src="/media/icons/pivot.jpg"></div>
+    <p style="margin-top:0.5em; width:250px;"><small><i><b>Note:</b> Pivot at any time by clicking on a previous step</i></small></p>
+    </div>
+    
     <div class="icons">
         {% for step in steps %}
             <div class="step_icon_area">
                 <div class="step_name">
-                <a href="#" class="info"><h4>{{step.name}}</h4><span>{{step.tooltip}}</span></a>
+                <a href="#" class="info"><h4>{{step.name}}</h4><span><small><i>{{step.tooltip}}</i></small></span></a>
                 </div>
                 <div class="step_icon">
                     <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">

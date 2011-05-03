@@ -327,9 +327,9 @@ a.info:hover span{ /*the span will display just on :hover state*/
     margin: 1em;
     padding: 1em;
     top:-7em; left:3em; width:15em;
-    border:1px solid #0cf;
-    background-color:#cff; color:#000;
-    text-align: center
+    border:1px solid #333353;
+    background-color:#fff; color:#333353;
+    text-align: center;
     }
 
 img {
