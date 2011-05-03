@@ -9,6 +9,9 @@ class FlowTemplate(db.Model):
 
     is_default = db.BooleanProperty(default=False)
 
+    def __unicode__(self):
+        return unicode(self.name)
+
 
 class StepTemplate(db.Model):
 
@@ -41,6 +44,9 @@ class Company(db.Model):
     name = db.StringProperty()
 
     flow_template = db.ReferenceProperty(FlowTemplate)
+    
+    def __unicode__(self):
+        return unicode(self.name)
 
 
 class Progress(db.Model):
@@ -58,15 +64,20 @@ class Progress(db.Model):
 
 class AdminFlowTemplate(appengine_admin.ModelAdmin):
     model = FlowTemplate
-
+    listFields = ('name', 'is_default')
 
 class AdminStepTemplate(appengine_admin.ModelAdmin):
     model = StepTemplate
-
+    listFields = ('name', 'order', 'flow', 'icon_url_base')
 
 class AdminCompany(appengine_admin.ModelAdmin):
     model = Company
+    listFields = ('owner', 'name', 'flow_template')
 
-appengine_admin.register(AdminFlowTemplate, AdminStepTemplate, AdminCompany)
+class AdminProgress(appengine_admin.ModelAdmin):
+    model = Progress
+    listFields = ('step', 'company', 'order', 'hypothesis', 'evidence', 'timestamp')
+
+appengine_admin.register(AdminFlowTemplate, AdminStepTemplate, AdminCompany, AdminProgress)
 
 
