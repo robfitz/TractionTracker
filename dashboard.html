@@ -122,11 +122,6 @@
         Before jumping this far ahead, you need to fill in beliefs for the preceding steps. Even if you aren't 100% sure, writing down what you're currently thinking will help you later.
         <a href="javascript:void(0);" class="medium" onclick="$('#bad_pivot').slideUp();">(Hide this message)</a>
     </div>
-
-    <div class="pivot_note" style="float:right; position:absolute; top: 100px; right:120px;">
-    <div style ="float:left"><img src="/media/icons/pivot.jpg"></div>
-    <p style="margin-top:0.5em; width:250px;"><small><i><b>Note:</b> Pivot at any time by clicking on a previous step</i></small></p>
-    </div>
     
     <div class="icons">
         {% for step in steps %}
@@ -141,6 +136,12 @@
                 </div>
             </div>
         {% endfor %}
+        
+        <div class="pivot_note" style="float:right; position:relative; width:10%; margin-top: 20px; margin-right: 20px;">
+        <div style ="float:left;"><img src="/media/icons/pivot.jpg"></div>
+        <p style="margin-top:0.5em; width:150px;"><small><i>Pivot at any time by clicking on a previous step</i></small></p>
+        </div>
+        
         <script>
 
             function click_step(step_num, step_key) {
