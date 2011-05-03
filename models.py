@@ -17,6 +17,7 @@ class StepTemplate(db.Model):
 
     name = db.StringProperty()
     order = db.IntegerProperty()
+    tooltip = db.StringProperty()
 
     flow = db.ReferenceProperty(FlowTemplate)
     icon_url_base = db.StringProperty()
@@ -68,7 +69,7 @@ class AdminFlowTemplate(appengine_admin.ModelAdmin):
 
 class AdminStepTemplate(appengine_admin.ModelAdmin):
     model = StepTemplate
-    listFields = ('name', 'order', 'flow', 'icon_url_base')
+    listFields = ('name', 'order', 'tooltip','flow', 'icon_url_base')
 
 class AdminCompany(appengine_admin.ModelAdmin):
     model = Company

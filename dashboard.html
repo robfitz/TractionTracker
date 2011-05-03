@@ -126,7 +126,9 @@
     <div class="icons">
         {% for step in steps %}
             <div class="step_icon_area">
-                <h4> {{step.name }}</h4>
+                <div class="step_name">
+                <a href="#" class="info"><h4>{{step.name}}</h4><span>{{step.tooltip}}</span></a>
+                </div>
                 <div class="step_icon">
                     <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">
                         <img id="step_icon_{{step.key}}" src="{{ step.icon_big }}" />
