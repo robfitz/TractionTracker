@@ -36,6 +36,12 @@ class StepTemplate(db.Model):
     def icon_small(self):
         return "/media/icons/%s_32.jpg" % self.icon_url_base
 
+    def prev(self):
+        try:
+            return StepTemplate.all().filter("flow =", self.flow).filter("order =", self.order - 1)[0]
+        except:
+            return None
+
     def next(self):
         try:
             return StepTemplate.all().filter("flow =", self.flow).filter("order =", self.order + 1)[0]

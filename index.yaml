@@ -21,6 +21,12 @@ indexes:
   - name: order
     direction: desc
 
+- kind: Progress
+  properties:
+  - name: step
+  - name: order
+    direction: desc
+
 - kind: StepTemplate
   properties:
   - name: flow

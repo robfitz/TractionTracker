@@ -247,12 +247,15 @@ class Dashboard(webapp.RequestHandler):
         current_progress = None
         prev_progress = None
 
-        if progress.count() >= 2:
-            prev_progress = progress[1]
-
         if progress.count() >= 1:
             current_progress = progress[0]
             progress = progress[1:progress.count()]
+
+        if current_progress.step.prev():
+            try:
+                prev_progress = models.Progress.all().filter("step =", current_progress.step.prev()).order("-order")[0]
+            except:
+                prev_progress = None
 
         if current_progress is not None:
             template_values = {
