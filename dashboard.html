@@ -140,14 +140,19 @@
         <script>
 
             function click_step(step_num, step_key) {
-                if (step_num <= {{current_progress.step.order}}) {
+                if (step_num < {{current_progress.step.order}}) {
                     //pivot back to the same or earlier step
                     popup('/dashboard/pivot/?step=' + step_key);
                 }
-                else if (step_num == 1 + {{current_progress.step.order}}) {
+                /*else if (step_num == 1 + {{current_progress.step.order}}) {
                     //use the icon to move exactly one step forward
                     $("#save_and_forward").click();
+                }*/
+                
+                else if (step_num == {{current_progress.step.order}}) {
+                    //do nothing if click current step
                 }
+                
                 else {
                     //not able to use icons to scoot ahead further than that
                     $("#bad_pivot").slideDown();
@@ -171,11 +176,11 @@
 
             {% if prev_progress %}
             <p>
-            Now that you've got a <i>{{prev_progress.step.name}}</i> of <i>{{prev_progress.hypothesis}}</i>,
+            <small>Now that you've got a <i>{{prev_progress.step.name}}</i> of <i>{{prev_progress.hypothesis}}</i>,</small>
             </p>
             {% endif %}
             <p>
-            What is your current <b>{{ current_progress.step.name }}</b>?
+            Define your current <b>{{ current_progress.step.name }}</b>?
             </p>
             
             <div class="textbox">
@@ -183,8 +188,8 @@
             </div>
             
             <div class="buttons">
+            <input id="save_and_forward" type="submit" value="Validate!" class="c2a"/>
             <input id="save_and_continue" type="submit" value="Save" class="c2b"/>
-            <input id="save_and_forward" type="submit" value="Onward!" class="c2a"/>
             </div>
         </form>
 

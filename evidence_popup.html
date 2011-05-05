@@ -9,8 +9,27 @@
         <input type="hidden" name="key" value="{{current_progress.key}}" />
         <input type="hidden" name="next_step" value="{{current_progress.step.next.key}}" />
         <br/>
-        What evidence do you have to validate your <b>{{current_progress.step.name }}</b> hypothesis?<textarea name="evidence">{{current_progress.evidence}}</textarea>
-        <a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a>
-        <input type="submit" value="Yeah!" class="c2a" style="float:right; margin-top:10px;"/>
+        <p>What evidence do you have to validate your <b>{{current_progress.step.name }}</b> hypothesis?<textarea name="evidence">{{current_progress.evidence}}</textarea></p>
+            
+        <p>
+        How confident are you that you have validated your <b>{{current_progress.step.name }}</b> hypothesis?
+        <br/>
+        <select name="confidence" value="{{current_progress.confidence}}" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;">
+        <option value="very_low">Very Low</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+        <option value="very_high">Very High</option>
+        </select>
+        </p>
+
+        <p>{{current_progress.step.numeric_question}} to validate your <b>{{current_progress.step.name }}</b> hypothesis?
+        <br/>
+        <input type="text" name="metric" value="{{current_progress.metric}}" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;"></p>
+            
+        <br/>
+        
+        <p><input type="submit" value="Submit" class="c2a" style="float:right; margin-top:10px;"/></p>
+        <p><a href="javascript:void(0);" onclick="closePopup();" style="text-align:right;">Actually I don't know enough yet</a></p>
     </form>
 {% endblock content %}
