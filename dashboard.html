@@ -127,7 +127,7 @@
         {% for step in steps %}
             <div class="step_icon_area">
                 <div class="step_name">
-                <a href="#" class="info"><h4>{{step.name}}</h4><span><small><i>{{step.tooltip}}</i></small></span></a>
+                <h4>{{step.name}}</h4>
                 </div>
                 <div class="step_icon">
                     <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">
@@ -136,11 +136,6 @@
                 </div>
             </div>
         {% endfor %}
-        
-        <div class="pivot_note" style="float:right; position:relative; width:10%; margin-top: 20px; margin-right: 20px;">
-        <div style ="float:left;"><img src="/media/icons/pivot.jpg"></div>
-        <p style="margin-top:0.5em; width:150px;"><small><i>Pivot at any time by clicking on a previous step</i></small></p>
-        </div>
         
         <script>
 
@@ -163,7 +158,14 @@
 
     <div class="current_step">
         <form id="hypothesis_form" action="/dashboard/hypothesis/" method="post">
-            <h3>{{ current_progress.step.name }}</h3>
+            
+            <div class="pivot_note" style="float:right; width:20%; margin-right:50px;">
+            <div style ="float:left;"><img src="/media/icons/pivot.jpg"></div>
+            <p style="margin-top:0.5em; width:220px;"><small><i>Pivot at any time by clicking on a previous step</i></small></p>
+            </div>
+            
+            <a href="#" class="info"><h3>{{ current_progress.step.name }}</h3><span><small><i>{{current_progress.step.tooltip}}</i></small></span></a>
+            
             <input type="hidden" name="key" value="{{current_progress.key}}" />
             <br/>
 
