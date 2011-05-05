@@ -23,6 +23,8 @@ class StepTemplate(db.Model):
 
     flow = db.ReferenceProperty(FlowTemplate)
     icon_url_base = db.StringProperty()
+    
+    numeric_question = db.StringProperty(default="How many customers have you interviewed")
 
 
     def __unicode__(self):
@@ -61,6 +63,9 @@ class Progress(db.Model):
 
     hypothesis = db.StringProperty(default="", multiline=True)
     evidence = db.StringProperty(default="", multiline=True)
+    confidence = db.StringProperty(default="",choices=[
+      'Very High', 'High', 'Medium', 'Low', 'Very Low'])
+    metric = db.IntegerProperty(default=0)
 
     timestamp = db.DateTimeProperty(auto_now_add=True)
 
@@ -71,7 +76,7 @@ class AdminFlowTemplate(appengine_admin.ModelAdmin):
 
 class AdminStepTemplate(appengine_admin.ModelAdmin):
     model = StepTemplate
-    listFields = ('name', 'order', 'tooltip','flow', 'icon_url_base')
+    listFields = ('name', 'order', 'tooltip','flow', 'icon_url_base', 'numeric_question')
 
 class AdminCompany(appengine_admin.ModelAdmin):
     model = Company
@@ -79,7 +84,7 @@ class AdminCompany(appengine_admin.ModelAdmin):
 
 class AdminProgress(appengine_admin.ModelAdmin):
     model = Progress
-    listFields = ('step', 'company', 'order', 'hypothesis', 'evidence', 'timestamp')
+    listFields = ('step', 'company', 'order', 'hypothesis', 'evidence', 'confidence', 'metric', 'timestamp')
 
 appengine_admin.register(AdminFlowTemplate, AdminStepTemplate, AdminCompany, AdminProgress)
 

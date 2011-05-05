@@ -6,11 +6,35 @@
 
 {% block content %}
     <form action="/dashboard/evidence/" method="post">
-        <input type="hidden" name="key" value="{{current_progress.key}}" />
+    <input type="hidden" name="key" value="{{current_progress.key}}" />
         <input type="hidden" name="next_step" value="{{current_progress.step.next.key}}" />
         <br/>
-        What evidence do you have to validate your <b>{{current_progress.step.name }}</b> hypothesis?<textarea name="evidence">{{current_progress.evidence}}</textarea>
-        <a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a>
-        <input type="submit" value="Yeah!" class="c2a" style="float:right; margin-top:10px;"/>
+        <p>What evidence do you have to validate your <b>{{current_progress.step.name }}</b> hypothesis?<textarea name="evidence">{{current_progress.evidence}}</textarea></p>
+            
+        <p>
+        How confident are you that you have validated your <b>{{current_progress.step.name }}</b> hypothesis?
+        <br/>
+        <select name="confidence" value="{{current_progress.confidence}}" style="font-family:'Cabin Sketch', sans-serif; font-size:18px; color:#666666; width:150px;">
+        <option value="very_low">Very Low</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+        <option value="very_high">Very High</option>
+        </select>
+        </p>
+
+        <p>{{current_progress.step.numeric_question}} to validate your <b>{{current_progress.step.name }}</b> hypothesis?
+        <br/>
+        <input type="text" name="metric" value="{{current_progress.metric}}" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;"></p>
+        <br/>    
+    <div class="buttons" style="float:right; clear:both;">
+        <p><input type="submit" value="Submit" class="c2a" style="float:right; margin-top:10px;"/></p>
+        <!--TODO - Save and continue button--><p><input id="save_and_continue" type="submit" value="Save" class="c2b" style="float:right;"/></p>    
+    </div>
+    
+    <div class="skip" style="float:right; clear:both; text-align:right;">
+    <small><a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a></small></p>
+    </div>
+    
     </form>
 {% endblock content %}

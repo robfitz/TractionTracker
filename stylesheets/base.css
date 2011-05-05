@@ -143,9 +143,9 @@ ul {
     -khtml-border-radius: 4px;
     border-radius: 4px;
     font-size: 26px;
-    line-height: 1.5em;
+    line-height: 1em;
     padding: .3em 10px;
-    width:200px;
+    width:100px;
     text-align:center;
     border-width: 1px;
     background-color: #52A600;
@@ -171,6 +171,7 @@ ul {
     box-shadow: none;
     text-shadow: none;
     font-family: "Helvetica Neue",arial,helvetica,sans-serif;
+    font-size: 18px;
 
     text-decoration:none;
     color:#fff;
@@ -326,7 +327,7 @@ a.info:hover span{ /*the span will display just on :hover state*/
     position:absolute;
     margin: 1em;
     padding: 1em;
-    top:-7em; left:3em; width:15em;
+    top:-2em; left:10em; width:15em;
     border:1px solid #333353;
     background-color:#f0f0f0; color:#333353;
     text-align: center;
@@ -335,3 +336,17 @@ a.info:hover span{ /*the span will display just on :hover state*/
 img {
 border: 0;
 }
+
+.buttons {
+        float:left;
+        width:20%;
+        height: 70px;
+        margin-left: 40px;
+    }
+    
+.skip {
+        float:left;
+        width:20%;
+        margin-left: 40px;
+        margin-top: 40px;
+    }

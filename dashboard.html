@@ -91,12 +91,6 @@
         float:left;
         width:70%;
     }
-    .buttons {
-        float:left;
-        width:20%;
-        height: 70px;
-        margin-left: 40px;
-    }
     
 {% endblock style %}
 
@@ -122,17 +116,12 @@
         Before jumping this far ahead, you need to fill in beliefs for the preceding steps. Even if you aren't 100% sure, writing down what you're currently thinking will help you later.
         <a href="javascript:void(0);" class="medium" onclick="$('#bad_pivot').slideUp();">(Hide this message)</a>
     </div>
-
-    <div class="pivot_note" style="float:right; position:absolute; top: 100px; right:120px;">
-    <div style ="float:left"><img src="/media/icons/pivot.jpg"></div>
-    <p style="margin-top:0.5em; width:250px;"><small><i><b>Note:</b> Pivot at any time by clicking on a previous step</i></small></p>
-    </div>
     
     <div class="icons">
         {% for step in steps %}
             <div class="step_icon_area">
                 <div class="step_name">
-                <a href="#" class="info"><h4>{{step.name}}</h4><span><small><i>{{step.tooltip}}</i></small></span></a>
+                <h4>{{step.name}}</h4>
                 </div>
                 <div class="step_icon">
                     <a href="javascript:void(0);" onclick="click_step({{step.order}}, '{{step.key}}');">
@@ -141,17 +130,23 @@
                 </div>
             </div>
         {% endfor %}
+        
         <script>
 
             function click_step(step_num, step_key) {
-                if (step_num <= {{current_progress.step.order}}) {
+                if (step_num < {{current_progress.step.order}}) {
                     //pivot back to the same or earlier step
                     popup('/dashboard/pivot/?step=' + step_key);
                 }
-                else if (step_num == 1 + {{current_progress.step.order}}) {
+                /*else if (step_num == 1 + {{current_progress.step.order}}) {
                     //use the icon to move exactly one step forward
                     $("#save_and_forward").click();
+                }*/
+                
+                else if (step_num == {{current_progress.step.order}}) {
+                    //do nothing if click current step
                 }
+                
                 else {
                     //not able to use icons to scoot ahead further than that
                     $("#bad_pivot").slideDown();
@@ -162,17 +157,24 @@
 
     <div class="current_step">
         <form id="hypothesis_form" action="/dashboard/hypothesis/" method="post">
-            <h3>{{ current_progress.step.name }}</h3>
+            
+            <div class="pivot_note" style="float:right; width:20%; margin-right:50px;">
+            <div style ="float:left;"><img src="/media/icons/pivot.jpg"></div>
+            <p style="margin-top:0.5em; width:220px;"><small><i>Pivot at any time by clicking on a previous step</i></small></p>
+            </div>
+            
+            <a href="#" class="info"><h3>{{ current_progress.step.name }}</h3><span><small><i>{{current_progress.step.tooltip}}</i></small></span></a>
+            
             <input type="hidden" name="key" value="{{current_progress.key}}" />
             <br/>
 
             {% if prev_progress %}
             <p>
-            Now that you've got a <i>{{prev_progress.step.name}}</i> of <i>{{prev_progress.hypothesis}}</i>,
+            <small>Now that you've got a <i>{{prev_progress.step.name}}</i> of <i>{{prev_progress.hypothesis}}</i>,</small>
             </p>
             {% endif %}
             <p>
-            What is your current <b>{{ current_progress.step.name }}</b>?
+            Define your current <b>{{ current_progress.step.name }}</b>?
             </p>
             
             <div class="textbox">
@@ -180,8 +182,11 @@
             </div>
             
             <div class="buttons">
+            <input id="save_and_forward" type="submit" value="Validate!" class="c2a"/>
             <input id="save_and_continue" type="submit" value="Save" class="c2b"/>
-            <input id="save_and_forward" type="submit" value="Onward!" class="c2a"/>
+            </div>
+            <div class="skip">
+            <!--TODO - Add link to skip step--><small><a href="#">Skip step, I'll do this later</a></small>
             </div>
         </form>
 
