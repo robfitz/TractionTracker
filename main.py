@@ -208,6 +208,7 @@ class Dashboard(webapp.RequestHandler):
         companies = models.Company.all().filter("owner =", user)
         if companies.count() == 0: 
             self.redirect("/new/")
+            return
         company = companies[0]
 
         progress = models.Progress.all().filter("company =", company).order("-order")

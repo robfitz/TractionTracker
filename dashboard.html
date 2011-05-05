@@ -68,6 +68,7 @@
         width: 90%;
 
         float:left;
+        position:relative;
         clear:both;
         border:1px solid #bbb;
 
@@ -98,11 +99,12 @@
 
     $(document).ready( function() {
         var pos = $("#step_icon_{{current_progress.step.key}}").offset();
+        var pos2 = $(".current_step").offset();
 
-        $("#step_arrow").css("left", pos.left + 5);
+        $("#step_arrow").css("left", pos.left - pos2.left);
 
         pos = $(".current_step").offset();
-        $("#step_arrow").css("top", pos.top - 31);
+        //$("#step_arrow").css("top", pos.top - 31);
 
         $("#step_arrow").show();
     });

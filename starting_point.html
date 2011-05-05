@@ -1,0 +1,48 @@
+{% extends 'dashboard.html' %}
+
+{% block script %}
+
+{% endblock %}
+
+
+{% block content %}
+
+    <!--
+    <div class="pivot_note" style="float:right; position:absolute; top: 100px; right:120px;">
+    <div style ="float:left"><img src="/media/icons/pivot.jpg"></div>
+    <p style="margin-top:0.5em; width:250px;"><small><i><b>Note:</b> Pivot at any time by clicking on a previous step</i></small></p>
+    </div>
+    -->
+    
+    <div class="icons">
+        {% for step in steps %}
+            <div class="step_icon_area">
+                <div class="step_name">
+                <a href="#" class="info"><h4>{{step.name}}</h4><span><small><i>{{step.tooltip}}</i></small></span></a>
+                </div>
+                <div class="step_icon">
+                    <a href="/dashboard/create_first_progress/?step={{step.key}}">
+                        <img id="step_icon_{{step.key}}" src="{{ step.icon_big }}" />
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        <script>
+
+            function click_step(step_num, step_key) {
+                if (step_num <= {{current_progress.step.order}}) {
+                    //pivot back to the same or earlier step
+                    popup('/dashboard/pivot/?step=' + step_key);
+                }
+                else if (step_num == 1 + {{current_progress.step.order}}) {
+                    //use the icon to move exactly one step forward
+                    $("#save_and_forward").click();
+                }
+                else {
+                    //not able to use icons to scoot ahead further than that
+                    $("#bad_pivot").slideDown();
+                }
+            }
+        </script>
+    </div>
+{% endblock %}
