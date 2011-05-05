@@ -76,6 +76,61 @@ class Progress(db.Model):
     timestamp = db.DateTimeProperty(auto_now_add=True)
 
 
+    def progress_img(self):
+
+        icon = ""
+
+        if self.has_pivoted():
+            icon = "pivot.jpg"
+        elif self.confidence in ["Very High", "High"]:
+            icon = "traffic_green.jpg"
+        elif self.confidence in ["Medium"]:
+            icon = "traffic_amber.jpg"
+        elif self.confidence in ["Low", "Very Low"]:
+            icon = "traffic_red.jpg"
+
+        if icon:
+            return "/media/icons/%s" % icon
+        else:
+            return ""
+
+
+    def in_progress(self):
+
+        #still in progress if we haven't yet moved on to anything new
+        return not self.next()
+
+
+    def has_validated(self):
+
+        next = self.next()
+        if not next: 
+            return False
+        else:
+            #we've validated if the next progress item refers
+            #to a later step (or repeats the current one)
+            return next.step.order > self.step.order
+
+
+    def has_pivoted(self):
+
+        next = self.next()
+        if not next: 
+            return False
+        else:
+            #we've pivoted if the next progress item refers
+            #to an earlier step (or repeats the current one)
+            return next.step.order <= self.step.order
+
+
+    def next(self):
+        progress =  Progress.all().filter("company =", self.company).filter("order =", self.order + 1)[0]
+
+        if not progress:
+            return False
+        return progress
+
+
 class AdminFlowTemplate(appengine_admin.ModelAdmin):
     model = FlowTemplate
     listFields = ('name', 'is_default')

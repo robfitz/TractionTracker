@@ -88,6 +88,25 @@
     .feeditem {
         padding:5px;
     }
+    .feeditem img {
+        float:left;
+        margin-right:10px;
+    }
+    .feed_row {
+        float:left;
+        clear:right;
+    }
+
+    .fr {
+    float:right; }
+
+    .light {
+        color:#999;
+    }
+    .strong {
+        color:#333!important;
+        font-weight:bold;
+    }
     .textbox {
         float:left;
         width:70%;
@@ -227,10 +246,27 @@
     <div class="feed">
     <p><h3>History</h3></p>
         {% for p in progress %}
+
             <div class="feeditem">
-            <p>
-                <img style="padding-right:10px;" src="{{ p.step.icon_small }}" />
-                <b>{{ p.company.name }}</b> defined their <b>{{ p.step.name }}</b> as <i>"{{p.hypothesis}}"</i>
+
+                <img src="{{ p.step.icon_small }}" />
+
+                <div class="feed_row">
+                    <span class="strong">{{ p.company.name }}</span>
+                   
+                    <span class="light">
+                        {{p.has_pivoted}}, {{p.has_validated}}, {{p.in_progress}}
+                        <br/>
+                        {% if p.has_pivoted %}
+                        has pivoted from {{p.step.name}} <img src="{{p.progress_img}}" />
+                        {% else %}{% if p.has_validated %}
+                        has validated {{p.step.name}} <img src="{{p.progress_img}}" />
+                        {% else %}{% if p.in_progress %}
+                        has started {{p.step.name}}
+                        {% endif %}{% endif %}{% endif %}
+                    </span>
+                </div>
+                <div class="light fr">{{p.timestamp|date:"F d, Y"}}</div>
 
                 <br/>
 
@@ -239,6 +275,7 @@
                 <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">Edit </a>
             </p>
             </div>
+
         {% endfor %}
 
         <script>
