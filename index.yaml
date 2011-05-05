@@ -24,4 +24,10 @@ indexes:
 - kind: StepTemplate
   properties:
   - name: flow
+  - name: is_valid_starting_point
+  - name: order
+
+- kind: StepTemplate
+  properties:
+  - name: flow
   - name: order

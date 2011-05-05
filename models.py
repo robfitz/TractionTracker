@@ -19,6 +19,8 @@ class StepTemplate(db.Model):
     order = db.IntegerProperty()
     tooltip = db.StringProperty()
 
+    is_valid_starting_point = db.BooleanProperty(default=False)
+
     flow = db.ReferenceProperty(FlowTemplate)
     icon_url_base = db.StringProperty()
 

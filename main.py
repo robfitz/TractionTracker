@@ -68,7 +68,7 @@ class NewProject(webapp.RequestHandler):
             self.redirect('/dashboard')
 
         else:
-            self.redirect(users.create_login_url('/new'))
+            self.redirect(users.create_login_url('/new/'))
 
 class SaveHypothesis_ajax(webapp.RequestHandler):
 
@@ -174,6 +174,24 @@ class PivotPopup(webapp.RequestHandler):
 
         path = os.path.join(os.path.dirname(__file__), 'pivot_popup.html')
         self.response.out.write(template.render(path, template_values))
+
+
+class CreateFirstProgress(webapp.RequestHandler):
+
+    def get(self):
+
+        user = users.get_current_user()
+        company = models.Company.all().filter("owner =", user)[0]
+        key = self.request.get("step")
+        step = models.StepTemplate.get(key)
+
+        first_progress = models.Progress(step=step,
+                company=company,
+                order=0)
+        first_progress.put()
+
+        self.redirect('/dashboard/')
+
         
 
 class Dashboard(webapp.RequestHandler):
@@ -197,30 +215,57 @@ class Dashboard(webapp.RequestHandler):
         steps = models.StepTemplate.all().filter("flow =", flow).order("order")
 
         if progress.count() == 0:
-            first_progress = models.Progress(step=steps[0],
-                    company=company,
-                    order=0)
-            first_progress.put()
 
-        current_progress = progress[0]
+            initial_step_options = steps.filter("is_valid_starting_point =", True)
+
+            if initial_step_options.count() == 0:
+                first_progress = models.Progress(step=steps[0],
+                        company=company,
+                        order=0)
+                first_progress.put()
+            elif initial_step_options.count() == 1:
+                first_progress = models.Progress(step=initial_step_options[0],
+                        company=company,
+                        order=0)
+                first_progress.put()
+            else:
+                #dashboard template will show a popup asking them to select an initial step
+                pass
+
+        current_progress = None
         prev_progress = None
+
         if progress.count() >= 2:
             prev_progress = progress[1]
-        progress = progress[1:progress.count()]
 
-        template_values = {
-                'header_c2a_url': '/dashboard/',
-                'header_c2a_linktext': 'Dashboard',
-                'acct_url': users.create_logout_url(self.request.uri),
-                'acct_url_linktext': 'Logout',
-                'steps': steps,
-                'progress': progress,
-                'prev_progress': prev_progress,
-                'current_progress': current_progress,
+        if progress.count() >= 1:
+            current_progress = progress[0]
+            progress = progress[1:progress.count()]
 
-            }
-        path = os.path.join(os.path.dirname(__file__), 'dashboard.html')
-        self.response.out.write(template.render(path, template_values))
+        if current_progress is not None:
+            template_values = {
+                    'header_c2a_url': '/dashboard/',
+                    'header_c2a_linktext': 'Dashboard',
+                    'acct_url': users.create_logout_url(self.request.uri),
+                    'acct_url_linktext': 'Logout',
+                    'steps': steps,
+                    'progress': progress,
+                    'prev_progress': prev_progress,
+                    'current_progress': current_progress,
+                }
+            path = os.path.join(os.path.dirname(__file__), 'dashboard.html')
+            self.response.out.write(template.render(path, template_values))
+        else:
+            template_values = {
+                    'header_c2a_url': '/dashboard/',
+                    'header_c2a_linktext': 'Dashboard',
+                    'acct_url': users.create_logout_url(self.request.uri),
+                    'acct_url_linktext': 'Logout',
+                    'steps': initial_step_options,
+                    'progress': progress,
+                }
+            path = os.path.join(os.path.dirname(__file__), 'starting_point.html')
+            self.response.out.write(template.render(path, template_values))
 
 
 application = webapp.WSGIApplication([
@@ -230,6 +275,7 @@ application = webapp.WSGIApplication([
         ('/new', NewProject),
         ('/dashboard/hypothesis/', SaveHypothesis_ajax),
         ('/dashboard/evidence/', SaveEvidence),
+        ('/dashboard/create_first_progress/', CreateFirstProgress),
         ('/dashboard/pivot/', PivotPopup),
         ('/dashboard/edit_progress/', EditProgressPopup),
         ('/dashboard/add_evidence/', AddEvidencePopup),
