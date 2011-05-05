@@ -15,18 +15,21 @@
         How confident are you that you have validated your <b>{{current_progress.step.name }}</b> hypothesis?
         <br/>
         <select name="confidence" value="{{current_progress.confidence}}" style="font-family:'Cabin Sketch', sans-serif; font-size:18px; color:#666666; width:150px;">
-        <option value="very_low">Very Low</option>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-        <option value="very_high">Very High</option>
+            <option value="Very Low">Very Low</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Very High">Very High</option>
         </select>
         </p>
 
         <p>{{current_progress.step.numeric_question}} to validate your <b>{{current_progress.step.name }}</b> hypothesis?
         <br/>
-        <input type="text" name="metric" value="{{current_progress.metric}}" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;"></p>
+        <input type="number" min="0" value="{{current_progress.metric}}" name="metric" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;">
+        </p>
+
         <br/>    
+
     <div class="buttons" style="float:right; clear:both;">
         <p><input type="submit" value="Submit" class="c2a" style="float:right; margin-top:10px;"/></p>
         <!--TODO - Save and continue button--><p><input id="save_and_continue" type="submit" value="Save" class="c2b" style="float:right;"/></p>    

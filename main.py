@@ -99,11 +99,22 @@ class SaveEvidence(webapp.RequestHandler):
         evidence = self.request.get("evidence")
         next_step_key = self.request.get("next_step")
 
+        confidence = self.request.get("confidence")
+        metric = self.request.get("metric")
+
         current_progress = models.Progress.get(key)
         if hypothesis:
             current_progress.hypothesis = hypothesis
         if evidence:
             current_progress.evidence = evidence
+        if confidence:
+            current_progress.confidence = confidence
+        if metric:
+            try:
+                current_progress.metric = int(metric)
+            except:
+                current_progress.metric = 0
+
         current_progress.put()
 
         if next_step_key:
