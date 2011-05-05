@@ -336,3 +336,17 @@ a.info:hover span{ /*the span will display just on :hover state*/
 img {
 border: 0;
 }
+
+.buttons {
+        float:left;
+        width:20%;
+        height: 70px;
+        margin-left: 40px;
+    }
+    
+.skip {
+        float:left;
+        width:20%;
+        margin-left: 40px;
+        margin-top: 40px;
+    }
