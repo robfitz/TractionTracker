@@ -30,14 +30,21 @@
 
         <br/>    
 
+        <input id="advance_to_next_step" type="hidden" name="advance_to_next_step" value='true' />
+
     <div class="buttons" style="float:right; clear:both;">
         <p><input type="submit" value="Submit" class="c2a" style="float:right; margin-top:10px;"/></p>
-        <!--TODO - Save and continue button--><p><input id="save_and_continue" type="submit" value="Save" class="c2b" style="float:right;"/></p>    
+        <p><input id="save_and_continue" type="submit" value="Save" class="c2b" style="float:right;"/></p>    
     </div>
     
     <div class="skip" style="float:right; clear:both; text-align:right;">
     <small><a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a></small></p>
     </div>
-    
+
+    <script>
+        $("#save_and_continue").click( function(event) {
+            $("#advance_to_next_step").val('false');
+        });
+    </script>
     </form>
 {% endblock content %}
