@@ -86,15 +86,29 @@
         margin-bottom: 100px;
     }
     .feeditem {
-        padding:5px;
+        padding:5px 5px 5px 50px;
+        margin-left:-50px;
+        float:left;
+        width:100%;
+        min-height:40px;
+        margin-bottom:15px;
+        position:relative;
     }
-    .feeditem img {
+    .feeditem > img {
         float:left;
         margin-right:10px;
     }
     .feed_row {
         float:left;
         clear:right;
+        width:100%;
+    }
+    .feed_row img {
+        height:20px;
+    }
+    .feed_contents {
+        float:left;
+        width:80%;
     }
 
     .fr {
@@ -110,6 +124,11 @@
     .textbox {
         float:left;
         width:70%;
+    }
+
+    .edit_link {
+        position:absolute;
+        left:0px;
     }
     
 {% endblock style %}
@@ -259,29 +278,31 @@
 
                 <img src="{{ p.step.icon_small }}" />
 
-                <div class="feed_row">
-                    <span class="strong">{{ p.company.name }}</span>
-                   
-                    <span class="light">
-                        {{p.has_pivoted}}, {{p.has_validated}}, {{p.in_progress}}
-                        <br/>
-                        {% if p.has_pivoted %}
-                        has pivoted from {{p.step.name}} <img src="{{p.progress_img}}" />
-                        {% else %}{% if p.has_validated %}
-                        has validated {{p.step.name}} <img src="{{p.progress_img}}" />
-                        {% else %}{% if p.in_progress %}
-                        has started {{p.step.name}}
-                        {% endif %}{% endif %}{% endif %}
-                    </span>
+                <div class="feed_contents">
+                    <div class="feed_row">
+                        <span class="strong">{{ p.company.name }}</span>
+                       
+                        <span class="light">
+                            {% if p.has_pivoted %}
+                            has pivoted from</span> {{p.step.name}} <img src="{{p.progress_img}}" />
+                            {% else %}{% if p.has_validated %}
+                            has validated</span> {{p.step.name}} <img src="{{p.progress_img}}" />
+                            {% else %}{% if p.in_progress %}
+                            has started</span> {{p.step.name}}
+                            {% endif %}{% endif %}{% endif %}
+                        
+                        <div class="light fr">{{p.timestamp|date:"F d, Y"}}</div>
+                    </div>
+
+                    <div class="feed_row">
+                        {{ p.hypothesis }}
+                    </div>
+                    <div class="light feed_row">
+                        {{ p.evidence }}
+                    </div>
                 </div>
-                <div class="light fr">{{p.timestamp|date:"F d, Y"}}</div>
 
-                <br/>
-
-                <p style="margin-left:100px;">and validated with evidence <i>"{{ p.evidence }}"</i></p>
-                <p style="text-align:right;"><b><small>{{ p.timestamp|date:"l d F Y" }}</small></b></p>
                 <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">Edit </a>
-            </p>
             </div>
 
         {% endfor %}
