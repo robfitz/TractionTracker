@@ -5,40 +5,59 @@
 {% endblock %}
 
 {% block content %}
+
+    {% block intro %}
+    {% endblock intro %}
+
     <form action="/dashboard/evidence/" method="post">
-    <input type="hidden" name="key" value="{{current_progress.key}}" />
-        <input type="hidden" name="next_step" value="{{current_progress.step.next.key}}" />
-        <br/>
-        <p>What evidence do you have to validate your <b>{{current_progress.step.name }}</b> hypothesis?<textarea name="evidence">{{current_progress.evidence}}</textarea></p>
+
+        {% block form_start %}
+        {% endblock form_start %}
+
+        <input type="hidden" name="key" value="{{current_progress.key}}" />
+        <input type="hidden" name="next_step" value="{{next_step.key}}" />
+
+        {% block evidence_prompt %}
+            <p>What evidence do you have to validate your <b>{{current_progress.step.name }}</b> hypothesis?
+        {% endblock evidence_prompt %}
+        
+        <textarea name="evidence">{{current_progress.evidence}}</textarea></p>
             
+        {% block confidence_prompt %}
         <p>
         How confident are you that you have validated your <b>{{current_progress.step.name }}</b> hypothesis?
-        <br/>
-        <select name="confidence" value="{{current_progress.confidence}}" style="font-family:'Cabin Sketch', sans-serif; font-size:18px; color:#666666; width:150px;">
-            <option value="Very Low">Very Low</option>
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-            <option value="Very High">Very High</option>
-        </select>
         </p>
+        {% endblock confidence_prompt %}
 
-        <p>{{current_progress.step.numeric_question}} to validate your <b>{{current_progress.step.name }}</b> hypothesis?
+        <select name="confidence" style="font-family:'Cabin Sketch', sans-serif; font-size:18px; color:#666666; width:150px;">
+            <option value="Very Low" {% ifequal current_progress.confidence "Very Low" %}selected="on"{% else %}{% endifequal %}>Very Low</option>
+            <option value="Low" {% ifequal current_progress.confidence "Low" %}selected="on"{% else %}{% endifequal %}>Low</option>
+            <option value="Medium" {% ifequal current_progress.confidence "Medium" %}selected="on"{% else %}{% endifequal %}>Medium</option>
+            <option value="High" {% ifequal current_progress.confidence "High" %}selected="on"{% else %}{% endifequal %}>High</option>
+            <option value="Very High" {% ifequal current_progress.confidence "Very High" %}selected="on"{% else %}{% endifequal %}>Very High</option>
+        </select>
+
+
+        {% block number_prompt %}
+        <p>
+        {{current_progress.step.numeric_question}} to validate your <b>{{current_progress.step.name }}</b> hypothesis?
+        </p>
+        {% endblock number_prompt %}
         <br/>
         <input type="number" min="0" value="{{current_progress.metric}}" name="metric" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;">
         </p>
 
         <br/>    
 
-        <input id="advance_to_next_step" type="hidden" name="advance_to_next_step" value='true' />
+        <input id="advance_to_next_step" type="hidden" name="advance_to_next_step" value='{% block advance_default %}true{% endblock advance_default %}' />
 
     <div class="buttons" style="float:right; clear:both;">
+        {% block buttons %}
         <p><input type="submit" value="Submit" class="c2a" style="float:right; margin-top:10px;"/></p>
         <p><input id="save_and_continue" type="submit" value="Save" class="c2b" style="float:right;"/></p>    
-    </div>
     
-    <div class="skip" style="float:right; clear:both; text-align:right;">
     <small><a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a></small></p>
+        {% endblock buttons %}
     </div>
 
     <script>

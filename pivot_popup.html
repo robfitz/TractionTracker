@@ -1,16 +1,24 @@
-{% extends 'popup.html' %}
+{% extends 'evidence_popup.html' %}
 
-{% block content %}
-    
-        <form action="/dashboard/evidence/" method="post">
-            What evidence do you have for changing your exisiting <b>{{next_step.name}}</b> hypotheses?
-            <input type="hidden" name="key" value="{{current_progress.key}}" />
-            <input type="hidden" name="next_step" value="{{next_step.key}}" />
-            <br/>
-            <textarea name="evidence">{{current_progress.evidence}}</textarea>
-            <br/>
-            <a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a>
-            <input type="submit" value="Pivot!" class="c2b" style="float:right; margin:10px;"/>
-        </form>
-
+{% block evidence_prompt %}
+    <p>
+    What evidence do you have for changing your exisiting <b>{{next_step.name}}</b> hypotheses?
+    </p>
 {% endblock %}
+
+{% block confidence_prompt %}
+    <p>
+    How confident are you that the current direction is not going to work?
+    </p>
+{% endblock confidence_prompt %}
+
+{% block number_prompt %}
+    <p>
+    {{current_progress.step.numeric_question}} to disprove your <b>{{current_progress.step.name}}</b> hypothesis?
+    </p>
+{% endblock number_prompt %}
+
+{% block buttons %}
+    <a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a>
+    <input type="submit" value="Pivot!" class="c2b" style="float:right; margin:10px;"/>
+{% endblock buttons %}

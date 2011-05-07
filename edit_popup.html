@@ -1,18 +1,16 @@
-{% extends 'popup.html' %}
+{% extends 'evidence_popup.html' %}
 
-{% block content %}
-    
-    Change it here. But don't cheat! A history of uncertainty is a good thing.
 
-    <form action="/dashboard/evidence/" method="post">
+{% block intro %}
+<p>
+Change it here. But don't cheat! A history of uncertainty is a good thing.
+</p>
+{% endblock intro %}
 
-        <input type="hidden" name="key" value="{{progress.key}}" />
-        <br/>
-        Beliefs: <textarea name="hypothesis">{{progress.hypothesis}}</textarea>
-        <br/>
-        Results: <textarea name="evidence">{{progress.evidence}}</textarea>
-        <a href="javascript:void(0);" onclick="closePopup();">Cancel</a>
-        <input type="submit" value="Update" class="c2b" style="float:right; margin:10px;"/>
-    </form>
+{% block advance_default %}false{% endblock advance_default %}
 
-{% endblock %}
+{% block form_start %}
+    Beliefs: <textarea name="hypothesis">{{current_progress.hypothesis}}</textarea>
+{% endblock form_start %}
+
+

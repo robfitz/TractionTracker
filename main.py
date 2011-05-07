@@ -143,6 +143,7 @@ class AddEvidencePopup(webapp.RequestHandler):
 
         template_values = {
                 'current_progress': progress,
+                'next_step': progress.step.next().key,
             }
 
         path = os.path.join(os.path.dirname(__file__), 'evidence_popup.html')
@@ -160,7 +161,7 @@ class EditProgressPopup(webapp.RequestHandler):
         progress = models.Progress.get(key)
 
         template_values = {
-                'progress': progress,
+                'current_progress': progress,
             }
 
         path = os.path.join(os.path.dirname(__file__), 'edit_popup.html')

@@ -94,9 +94,24 @@
         margin-bottom:15px;
         position:relative;
     }
-    .feeditem > img {
+    .feedbody > img {
         float:left;
         margin-right:10px;
+        margin-top:8px;
+    }
+    .feedbody {
+        float:left;
+        width:95%;
+        padding:8px;
+    }
+    .feeditem:hover .feedbody {
+        background-color:#dfd;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -o-border-radius: 3px;
+        -ms-border-radius: 3px;
+        -khtml-border-radius: 3px;
+        border-radius: 3px;
     }
     .feed_row {
         float:left;
@@ -108,7 +123,7 @@
     }
     .feed_contents {
         float:left;
-        width:80%;
+        width:94%;
     }
 
     .fr {
@@ -279,30 +294,34 @@
 
             <div class="feeditem">
 
-                <img src="{{ p.step.icon_small }}" />
+                <div class="feedbody">
 
-                <div class="feed_contents">
-                    <div class="feed_row">
-                        <span class="strong">{{ p.company.name }}</span>
-                       
-                        <span class="light">
-                            {% if p.has_pivoted %}
-                            has pivoted from</span> {{p.step.name}} <img src="{{p.progress_img}}" />
-                            {% else %}{% if p.has_validated %}
-                            has validated</span> {{p.step.name}} <img src="{{p.progress_img}}" />
-                            {% else %}{% if p.in_progress %}
-                            has started</span> {{p.step.name}}
-                            {% endif %}{% endif %}{% endif %}
-                        
-                        <div class="light fr">{{p.timestamp|date:"F d, Y"}}</div>
+                    <img src="{{ p.step.icon_small }}" />
+
+                    <div class="feed_contents">
+                        <div class="feed_row">
+                            <span class="strong">{{ p.company.name }}</span>
+                           
+                            <span class="light">
+                                {% if p.has_pivoted %}
+                                has pivoted from</span> {{p.step.name}} <img src="{{p.progress_img}}" />
+                                {% else %}{% if p.has_validated %}
+                                has validated</span> {{p.step.name}} <img src="{{p.progress_img}}" />
+                                {% else %}{% if p.in_progress %}
+                                has started</span> {{p.step.name}}
+                                {% endif %}{% endif %}{% endif %}
+                            
+                            <div class="light fr">{{p.timestamp|date:"F d, Y"}}</div>
+                        </div>
+
+                        <div class="feed_row">
+                            {{ p.hypothesis }}
+                        </div>
+                        <div class="light feed_row">
+                            {{ p.evidence }}
+                        </div>
                     </div>
 
-                    <div class="feed_row">
-                        {{ p.hypothesis }}
-                    </div>
-                    <div class="light feed_row">
-                        {{ p.evidence }}
-                    </div>
                 </div>
 
                 <a class="edit_link hidden" href="javascript:void(0);" onclick="popup('/dashboard/edit_progress/?progress={{p.key}}');">Edit </a>
