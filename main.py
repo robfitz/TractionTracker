@@ -187,6 +187,38 @@ class PivotPopup(webapp.RequestHandler):
         self.response.out.write(template.render(path, template_values))
 
 
+class SkipStep(webapp.RequestHandler):
+
+    def get(self):
+
+        user = users.get_current_user()
+        company = models.Company.all().filter("owner =", user)[0]
+        progress = models.Progress.all().filter("company =", company).order("-order")
+
+        current_progress = None
+        next_step = None
+
+        if progress.count() >= 1:
+            current_progress = progress[0]
+            next_step = current_progress.step.next()
+
+        if current_progress and next_step:
+
+            #TODO: decide whether to mark this item as skipped or
+            #just entirely delete it from the stream, which is what
+            #is currently happening
+            current_progress.delete()
+
+            next_progress = models.Progress(
+                    step=next_step,
+                    company=company,
+                    order=models.Progress.all().filter("company =", company).count())
+            next_progress.put()
+
+        self.redirect('/dashboard')
+
+
+
 class CreateFirstProgress(webapp.RequestHandler):
 
     def get(self):
@@ -291,6 +323,7 @@ application = webapp.WSGIApplication([
         ('/dashboard/hypothesis/', SaveHypothesis_ajax),
         ('/dashboard/evidence/', SaveEvidence),
         ('/dashboard/create_first_progress/', CreateFirstProgress),
+        ('/dashboard/skip_step/', SkipStep),
         ('/dashboard/pivot/', PivotPopup),
         ('/dashboard/edit_progress/', EditProgressPopup),
         ('/dashboard/add_evidence/', AddEvidencePopup),
