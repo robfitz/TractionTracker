@@ -99,6 +99,8 @@ class SaveEvidence(webapp.RequestHandler):
         evidence = self.request.get("evidence")
         next_step_key = self.request.get("next_step")
 
+        advance_to_next_step = self.request.get("advance_to_next_step", 'true') == 'true'
+
         confidence = self.request.get("confidence")
         metric = self.request.get("metric")
 
@@ -117,7 +119,7 @@ class SaveEvidence(webapp.RequestHandler):
 
         current_progress.put()
 
-        if next_step_key:
+        if next_step_key and advance_to_next_step:
             next_step = models.StepTemplate.get(next_step_key)
 
             next_progress = models.Progress(
