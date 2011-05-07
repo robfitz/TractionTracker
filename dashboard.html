@@ -154,6 +154,14 @@
         
         <script>
 
+            $(function() {
+                {% for step in steps %}
+                    if ({{step.order}} > {{current_progress.step.order}}) {
+                        $("#step_icon_{{step.key}}").attr("src", "{{step.icon_big_gray}}");
+                    }
+                {% endfor %}
+            });
+
             function click_step(step_num, step_key) {
                 if (step_num < {{current_progress.step.order}}) {
                     //pivot back to the same or earlier step

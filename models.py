@@ -30,6 +30,9 @@ class StepTemplate(db.Model):
     def __unicode__(self):
         return unicode(self.name)
 
+    def icon_big_gray(self):
+        return "/media/icons/%s_grey_64.jpg" % self.icon_url_base
+
     def icon_big(self):
         return "/media/icons/%s_64.jpg" % self.icon_url_base
 
