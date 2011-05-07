@@ -55,7 +55,8 @@ class StepTemplate(db.Model):
 class Company(db.Model):
 
     owner = db.UserProperty()
-    name = db.StringProperty()
+    name = db.StringProperty(default="A wonderful company")
+    owner_name = db.StringProperty("A splendid person")
 
     flow_template = db.ReferenceProperty(FlowTemplate)
     

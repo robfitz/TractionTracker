@@ -60,7 +60,6 @@ class NewProject(webapp.RequestHandler):
 
                 project = models.Company(
                         owner=user,
-                        name="A wonderful company",
                         flow_template=default_flow)
 
                 project.put()
@@ -84,6 +83,21 @@ class SaveHypothesis_ajax(webapp.RequestHandler):
         current_progress = models.Progress.get(key)
         current_progress.hypothesis = hypothesis
         current_progress.put()
+
+
+class SavePersonalDeets(webapp.RequestHandler):
+
+    def post(self):
+
+        user = users.get_current_user()
+        company = models.Company.all().filter("owner =", user)[0]
+
+        company.name = self.request.get("company_name")
+        company.owner_name = self.request.get("person_name")
+
+        company.put()
+
+        self.redirect('/dashboard/')
 
 
 class SaveEvidence(webapp.RequestHandler):
@@ -302,6 +316,7 @@ class Dashboard(webapp.RequestHandler):
                     'progress': progress,
                     'prev_progress': prev_progress,
                     'current_progress': current_progress,
+                    'company': company,
                 }
             path = os.path.join(os.path.dirname(__file__), 'dashboard.html')
             self.response.out.write(template.render(path, template_values))
@@ -329,6 +344,7 @@ application = webapp.WSGIApplication([
         ('/dashboard/skip_step/', SkipStep),
         ('/dashboard/pivot/', PivotPopup),
         ('/dashboard/edit_progress/', EditProgressPopup),
+        ('/dashboard/save_personal_deets/', SavePersonalDeets),
         ('/dashboard/add_evidence/', AddEvidencePopup),
         ('/dashboard', Dashboard),
         ('/dashboard/', Dashboard),

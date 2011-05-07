@@ -167,6 +167,26 @@
 
 {% block content %}
 
+    <div id="personal_info">
+        <p>
+        Update your company info:
+        </p>
+
+        <form method="POST" action="/dashboard/save_personal_deets/">
+            <p>
+            <label for="company_name">Company name:</label>
+            <input id="company_name" name="company_name" value="{{company.name}}" />
+            </p>
+
+            <p>
+            <label for="person_name">Your name:</label>
+                <input id="person_name" name="person_name" value="{{company.owner_name}}" />
+            </p>
+
+            <input id="save_personal_deets" type="submit" value="Update personal details" />
+        </form>
+    </div>
+
     <div id="bad_pivot" class="alert hidden">
         Before jumping this far ahead, you need to fill in beliefs for the preceding steps. Even if you aren't 100% sure, writing down what you're currently thinking will help you later.
         <a href="javascript:void(0);" class="medium" onclick="$('#bad_pivot').slideUp();">(Hide this message)</a>
