@@ -29,21 +29,22 @@
         </p>
         {% endblock confidence_prompt %}
 
-        <select name="confidence" style="font-family:'Cabin Sketch', sans-serif; font-size:18px; color:#666666; width:150px;">
+        <p>
+        <select name="confidence" style="font-family:Arial, sans-serif; font-size:16px; width:150px;">
             <option value="Very Low" {% ifequal current_progress.confidence "Very Low" %}selected="on"{% else %}{% endifequal %}>Very Low</option>
             <option value="Low" {% ifequal current_progress.confidence "Low" %}selected="on"{% else %}{% endifequal %}>Low</option>
             <option value="Medium" {% ifequal current_progress.confidence "Medium" %}selected="on"{% else %}{% endifequal %}>Medium</option>
             <option value="High" {% ifequal current_progress.confidence "High" %}selected="on"{% else %}{% endifequal %}>High</option>
             <option value="Very High" {% ifequal current_progress.confidence "Very High" %}selected="on"{% else %}{% endifequal %}>Very High</option>
         </select>
-
+        </p>
 
         {% block number_prompt %}
         <p>
         {{current_progress.step.numeric_question}} to validate your <b>{{current_progress.step.name }}</b> hypothesis?
         </p>
         {% endblock number_prompt %}
-        <br/>
+        <p>
         <input type="number" min="0" value="{{current_progress.metric}}" name="metric" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;">
         </p>
 
@@ -51,12 +52,12 @@
 
         <input id="advance_to_next_step" type="hidden" name="advance_to_next_step" value='{% block advance_default %}true{% endblock advance_default %}' />
 
-    <div class="buttons" style="float:right; clear:both;">
+    <div class="buttons" style="float:right; clear:both; width:30%;">
         {% block buttons %}
-        <p><input type="submit" value="Submit" class="c2a" style="float:right; margin-top:10px;"/></p>
-        <p><input id="save_and_continue" type="submit" value="Save" class="c2b" style="float:right;"/></p>    
+        <p><input type="submit" value="Submit" class="c2a" style="float:right; margin-top:10px; clear:both;"/></p>
+        <p><input id="save_and_continue" type="submit" value="Save" class="c2b" style="float:right; clear:both;"/></p>    
     
-    <small><a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a></small></p>
+    <p style="text-align:right; clear:both; float:right; margin-top:10px;"><small><a href="javascript:void(0);" onclick="closePopup();">Actually I don't know enough yet</a></small></p>
         {% endblock buttons %}
     </div>
 

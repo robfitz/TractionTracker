@@ -10,7 +10,9 @@ Change it here. But don't cheat! A history of uncertainty is a good thing.
 {% block advance_default %}false{% endblock advance_default %}
 
 {% block form_start %}
+    <p>
     Beliefs: <textarea name="hypothesis">{{current_progress.hypothesis}}</textarea>
+    </p>
 {% endblock form_start %}
 
 
