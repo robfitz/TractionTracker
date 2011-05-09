@@ -22,7 +22,17 @@
         {% endblock evidence_prompt %}
         
         <textarea name="evidence">{{current_progress.evidence}}</textarea></p>
-            
+        
+
+        {% block number_prompt %}
+        <p>
+        {{current_progress.step.numeric_question}} to validate your <b>{{current_progress.step.name }}</b> hypothesis?
+        </p>
+        {% endblock number_prompt %}
+        <p>
+        <input type="number" min="0" value="{{current_progress.metric}}" name="metric" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;" onkeydown="ForceNumericInput(this, true, false)">
+        </p>
+
         {% block confidence_prompt %}
         <p>
         How confident are you that you have validated your <b>{{current_progress.step.name }}</b> hypothesis?
@@ -39,14 +49,6 @@
         </select>
         </p>
 
-        {% block number_prompt %}
-        <p>
-        {{current_progress.step.numeric_question}} to validate your <b>{{current_progress.step.name }}</b> hypothesis?
-        </p>
-        {% endblock number_prompt %}
-        <p>
-        <input type="number" min="0" value="{{current_progress.metric}}" name="metric" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;">
-        </p>
 
         <br/>    
 
