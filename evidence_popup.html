@@ -27,7 +27,9 @@
         {% block number_prompt %}
         <p>
         {{current_progress.step.numeric_question}} to validate your <b>{{current_progress.step.name }}</b> hypothesis?
+        <br/><small>Please use purely numerical inputs, for example "1000" <b>not</b> "1k", "one thousand", "$1,000" or "1,000".</small>
         </p>
+
         {% endblock number_prompt %}
         <p>
         <input type="text" min="0" value="{{current_progress.metric}}" name="metric" style="font-family:'Cabin Sketch', sans-serif; font-size:24px; color:#666666;" onkeydown="ForceNumericInput(this, true, false, event)">

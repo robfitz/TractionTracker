@@ -141,7 +141,7 @@ class AdminFlowTemplate(appengine_admin.ModelAdmin):
 
 class AdminStepTemplate(appengine_admin.ModelAdmin):
     model = StepTemplate
-    listFields = ('name', 'order', 'tooltip','flow', 'icon_url_base', 'numeric_question')
+    listFields = ('name', 'order', 'tooltip', 'is_valid_starting_point', 'flow', 'icon_url_base', 'numeric_question')
 
 class AdminCompany(appengine_admin.ModelAdmin):
     model = Company

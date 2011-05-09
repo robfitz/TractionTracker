@@ -286,21 +286,21 @@ class Dashboard(webapp.RequestHandler):
 
         if progress.count() == 0:
 
-            initial_step_options = steps.filter("is_valid_starting_point =", True)
+            #initial_step_options = steps.filter("is_valid_starting_point =", True)
 
-            if initial_step_options.count() == 0:
+            #if initial_step_options.count() == 0:
                 first_progress = models.Progress(step=steps[0],
                         company=company,
                         order=0)
                 first_progress.put()
-            elif initial_step_options.count() == 1:
-                first_progress = models.Progress(step=initial_step_options[0],
-                        company=company,
-                        order=0)
-                first_progress.put()
-            else:
-                #dashboard template will show a popup asking them to select an initial step
-                pass
+            #elif initial_step_options.count() == 1:
+            #    first_progress = models.Progress(step=initial_step_options[0],
+            #            company=company,
+            #            order=0)
+            #    first_progress.put()
+            #else:
+            #    dashboard template will show a popup asking them to select an initial step
+            #    pass
 
         current_progress = None
         prev_progress = None

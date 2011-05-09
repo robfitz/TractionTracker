@@ -11,7 +11,7 @@ Change it here. But don't cheat! A history of uncertainty is a good thing.
 
 {% block form_start %}
     <p>
-    Beliefs: <textarea name="hypothesis">{{current_progress.hypothesis}}</textarea>
+    Define your <b>{{current_progress.step.name }}</b> hypothesis? <textarea name="hypothesis">{{current_progress.hypothesis}}</textarea>
     </p>
 {% endblock form_start %}
 
