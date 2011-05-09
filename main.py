@@ -1,3 +1,4 @@
+import logging
 import os
 import cgi
 
@@ -104,6 +105,8 @@ class SaveEvidence(webapp.RequestHandler):
 
     def post(self):
 
+        logging.info("wtf")
+
         user = users.get_current_user()
         company = models.Company.all().filter("owner =", user)[0]
         progress = models.Progress.all().filter("company =", company).order("-order")
@@ -114,6 +117,8 @@ class SaveEvidence(webapp.RequestHandler):
         next_step_key = self.request.get("next_step")
 
         advance_to_next_step = self.request.get("advance_to_next_step", 'true') == 'true'
+        logging.info( 'advance to next step: %s' % advance_to_next_step )
+        logging.info( 'next step key: %s' % next_step_key )
 
         confidence = self.request.get("confidence")
         metric = self.request.get("metric")
@@ -134,13 +139,17 @@ class SaveEvidence(webapp.RequestHandler):
         current_progress.put()
 
         if next_step_key and advance_to_next_step:
+            logging.info ('trying for next step')
             next_step = models.StepTemplate.get(next_step_key)
+            logging.info ('got next step: %s' % next_step)
 
             next_progress = models.Progress(
                     step=next_step,
                     company=company,
                     order=models.Progress.all().filter("company =", company).count())
+            logging.info ('made next progress')
             next_progress.put()
+            logging.info('put next progress')
 
         self.redirect('/dashboard')
 
@@ -157,7 +166,7 @@ class AddEvidencePopup(webapp.RequestHandler):
 
         template_values = {
                 'current_progress': progress,
-                'next_step': progress.step.next().key,
+                'next_step': progress.step.next(),
             }
 
         path = os.path.join(os.path.dirname(__file__), 'evidence_popup.html')
