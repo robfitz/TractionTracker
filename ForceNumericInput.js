@@ -1,4 +1,4 @@
-	function ForceNumericInput(This, AllowDot, AllowMinus)
+	function ForceNumericInput(This, AllowDot, AllowMinus,e)
 	{
 		if(arguments.length == 1)
 		{
@@ -12,27 +12,36 @@
            	return;
         }
 
+        if(window.event){
         var code = event.keyCode;
+        }else{
+        var code = e.keyCode;
+        }
+        
         switch(code)
         {
             case 8:     // backspace
             case 37:    // left arrow
             case 39:    // right arrow
             case 46:    // delete
-                event.returnValue=true;
+                if(window.event) event.returnValue=true;
                 return;
         }
         if(code == 189)     // minus sign
         {
         	if(AllowMinus == false)
         	{
+                if(window.event){
                 event.returnValue=false;
+                }else{
+                StopEvent(e);
+                }
                 return;
             }
 
 
             // wait until the element has been updated to see if the minus is in the right spot
-            var s = "ForceNumericInput(document.getElementById('"+This.id+"'))";
+            var s = "ForceNumericInput(document.getElementById('"+This.id+"'),"+AllowMinus+","+AllowDot+","+e+")";
             setTimeout(s, 250);
             return;
         }
@@ -41,17 +50,45 @@
             if(This.value.indexOf(".") >= 0)
             {
             	// don't allow more than one dot
+                if(window.event){
                 event.returnValue=false;
+                }else{
+                StopEvent(e);
+                }
                 return;
             }
-            event.returnValue=true;
+            if(window.event) event.returnValue=true;
             return;
         }
         // allow character of between 0 and 9
         if(code >= 48 && code <= 57)
         {
-            event.returnValue=true;
+            if(window.event) event.returnValue=true;
             return;
         }
+        if(window.event){
         event.returnValue=false;
+        }else{
+        StopEvent(e);
+        }
 	}
+	
+	function StopEvent(pE)
+    {
+    if (!pE)
+    if (window.event)
+    pE = window.event;
+    else
+    return;
+    if (pE.cancelBubble != null)
+    pE.cancelBubble = true;
+    if (pE.stopPropagation)
+    pE.stopPropagation();
+    if (pE.preventDefault)
+    pE.preventDefault();
+    if (window.event)
+    pE.returnValue = false;
+    if (pE.cancel != null)
+    pE.cancel = true;
+    } // StopEvent
+	

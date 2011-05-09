@@ -75,7 +75,7 @@ class Progress(db.Model):
     evidence = db.StringProperty(default="", multiline=True)
     confidence = db.StringProperty(default="",choices=[
       'Very High', 'High', 'Medium', 'Low', 'Very Low'])
-    metric = db.IntegerProperty(default=0)
+    metric = db.StringProperty(default="0")
 
     timestamp = db.DateTimeProperty(auto_now_add=True)
 

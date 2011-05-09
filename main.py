@@ -132,9 +132,9 @@ class SaveEvidence(webapp.RequestHandler):
             current_progress.confidence = confidence
         if metric:
             try:
-                current_progress.metric = int(metric)
+                current_progress.metric = metric
             except:
-                current_progress.metric = 0
+                current_progress.metric = "0"
 
         current_progress.put()
 
