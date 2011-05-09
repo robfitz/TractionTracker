@@ -148,7 +148,7 @@
     
     #personal_info {
         border: 1px solid #cccccc;
-        margin-bottom: 20px;
+        margin-top: 10px;
         padding: 12px;
         clear:both;
         width: 95%
@@ -175,6 +175,30 @@
 
 {% block content %}
 
+    <div id="personal_info">
+        
+        <div style="float:left; width:30%;">
+            <small>Update your Traction Tracker details:</small>
+        </div>
+
+    <form method="POST" action="/dashboard/save_personal_deets/">
+            
+            <div style="float:left; width:25%; display:block;">
+            <label for="company_name" style="font-family: 'Cabin Sketch', arial, serif; color: #333353;">Company:</label>
+                <input id="company_name" name="company_name" value="{{company.name}}" />
+            </div>
+
+            <div style="float:left; width:25%;">
+            <label for="person_name" style="font-family: 'Cabin Sketch', arial, serif; color: #333353;">You:</label>
+                <input id="person_name" name="person_name" value="{{company.owner_name}}" />
+            </div>
+
+            <div style="float:left; width:20%;">
+                <input id="save_personal_deets" type="submit" value="Update" class="c2b" style="margin:-5px; padding:2px; float:right; font-size: 16px; position:block;"/>
+            </div>
+    </form>
+    </div>
+    
     <div id="bad_pivot" class="alert hidden">
         Before jumping this far ahead, you need to fill in beliefs for the preceding steps. Even if you aren't 100% sure, writing down what you're currently thinking will help you later.
         <a href="javascript:void(0);" class="medium" onclick="$('#bad_pivot').slideUp();">(Hide this message)</a>
@@ -241,11 +265,11 @@
 
             {% if prev_progress %}
             <p>
-            <small>Now that you've got a <i>{{prev_progress.step.name}}</i> of <i>{{prev_progress.hypothesis}}</i>,</small>
+            <small>Now that you've defined a <i>{{prev_progress.step.name}}</i> of <i>{{prev_progress.hypothesis}}</i>,</small>
             </p>
             {% endif %}
             <p>
-            Define your current <b>{{ current_progress.step.name }}</b>?
+            Define your current <b>{{ current_progress.step.name }}</b> hypothesis?
             </p>
             
             <div class="textbox">
@@ -346,30 +370,6 @@
             });
         </script>
 
-    </div>
-    
-    <div id="personal_info">
-        
-        <div style="float:left; width:30%;">
-            <small>Update your Traction Tracker details:</small>
-        </div>
-
-    <form method="POST" action="/dashboard/save_personal_deets/">
-            
-            <div style="float:left; width:25%; display:block;">
-            <label for="company_name" style="font-family: 'Cabin Sketch', arial, serif; color: #333353;">Company:</label>
-                <input id="company_name" name="company_name" value="{{company.name}}" />
-            </div>
-
-            <div style="float:left; width:25%;">
-            <label for="person_name" style="font-family: 'Cabin Sketch', arial, serif; color: #333353;">You:</label>
-                <input id="person_name" name="person_name" value="{{company.owner_name}}" />
-            </div>
-
-            <div style="float:left; width:20%;">
-                <input id="save_personal_deets" type="submit" value="Update" class="c2b" style="margin:-5px; padding:2px; float:right; font-size: 16px; position:block;"/>
-            </div>
-    </form>
     </div>
     
 {% endblock content %}
