@@ -305,6 +305,7 @@ class Dashboard(webapp.RequestHandler):
         current_progress = None
         prev_progress = None
 
+        progress = models.Progress.all().filter("company =", company).order("-order")
         if progress.count() >= 1:
             current_progress = progress[0]
             progress = progress[1:progress.count()]
